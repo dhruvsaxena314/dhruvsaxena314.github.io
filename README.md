@@ -3,585 +3,560 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dhruv Saxena — Resume</title>
-  <meta name="description" content="Dhruv Saxena — Resume / Portfolio" />
+  <title>Dhruv Saxena — Portfolio</title>
+  <meta name="description" content="Dhruv Saxena — Research Fellow, AI/ML, Quizzing & Projects" />
+  <link rel="icon" href="data:," />
   <style>
+    /* =========================
+       Minimal reset & fonts
+       ========================= */
     :root{
-      --bg:#0f1724;
-      --card:#0b1220;
-      --muted:#9aa4b2;
-      --accent1:#7c3aed;
-      --accent2:#06b6d4;
+      --bg:#0b1020;
+      --card:#0f1724;
+      --muted:#9fb0c8;
+      --accent-a:#7c3aed;
+      --accent-b:#06b6d4;
       --glass: rgba(255,255,255,0.03);
-      --glass-2: rgba(255,255,255,0.02);
-      --glass-3: rgba(255,255,255,0.015);
-      --glass-border: rgba(255,255,255,0.04);
-      --success: #10b981;
+      --glass2: rgba(255,255,255,0.02);
+      --radius:14px;
+      --maxwidth:1100px;
     }
-    /* Reset & layout */
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html,body{height:100%;margin:0}
     body{
-      margin:0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(1200px 600px at 10% 20%, rgba(124,58,237,0.09), transparent 8%),
-                  radial-gradient(900px 500px at 90% 80%, rgba(6,182,212,0.05), transparent 10%),
-                  var(--bg);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      background:
+        radial-gradient(800px 400px at 10% 10%, rgba(124,58,237,0.07), transparent 8%),
+        radial-gradient(700px 350px at 95% 85%, rgba(6,182,212,0.04), transparent 7%),
+        var(--bg);
       color: #e6eef6;
-      padding:32px;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+      padding:32px 20px;
+      display:flex;
+      justify-content:center;
     }
 
-    /* Main container */
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
+    /* =========================
+       Container & layout
+       ========================= */
+    .shell{
+      width:100%;
+      max-width:var(--maxwidth);
       display:grid;
-      grid-template-columns:360px 1fr;
+      grid-template-columns: 420px 1fr;
       gap:28px;
       align-items:start;
     }
 
-    /* Left column (card) */
-    .card{
+    @media (max-width:920px) {
+      .shell{grid-template-columns:1fr; padding-bottom:50px}
+    }
+
+    /* =========================
+       Left panel (profile)
+       ========================= */
+    .panel {
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:16px;
+      border-radius:var(--radius);
       padding:22px;
-      border:1px solid var(--glass-border);
-      box-shadow: 0 8px 40px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      border:1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 10px 40px rgba(2,6,23,0.6);
       position:relative;
       overflow:hidden;
     }
-    .photo {
+    .profile-photo {
       width:100%;
       display:flex;
       justify-content:center;
-      align-items:center;
-      margin-bottom:18px;
+      margin-bottom:14px;
     }
-
-    /* SVG initial-avatar (can replace with <img src="photo.jpg">) */
-    .avatar {
-      width:220px;
-      height:220px;
-      border-radius:18px;
-      background:linear-gradient(135deg,var(--accent1),var(--accent2));
-      display:flex;
+    .photo {
+      width:240px;
+      height:240px;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow: 0 16px 40px rgba(2,6,23,0.6);
+      transition:transform .45s cubic-bezier(.2,.9,.3,1);
+      border:1px solid rgba(255,255,255,0.03);
+      background:linear-gradient(135deg,var(--accent-a),var(--accent-b));
+      display:inline-flex;
       align-items:center;
       justify-content:center;
-      color:white;
-      font-weight:700;
-      font-size:64px;
-      letter-spacing:1px;
-      box-shadow: 0 10px 30px rgba(6,11,34,0.6), 0 2px 0 rgba(255,255,255,0.02) inset;
-      transition:transform .45s cubic-bezier(.2,.9,.3,1);
+      font-weight:800;
+      font-size:44px;
+      color:rgba(255,255,255,0.95);
     }
-    .avatar:hover{transform:translateY(-6px) rotate(-2deg) scale(1.02)}
-
+    .photo:hover{transform:translateY(-8px) rotate(-1deg)}
     .name{
       text-align:center;
-      margin-top:12px;
+      margin-top:10px;
     }
-    .name h1{
-      margin:0;
-      font-size:20px;
-      letter-spacing:0.2px;
-    }
-    .name p{
-      margin:6px 0 0 0;
-      color:var(--muted);
-      font-size:13px;
-    }
+    .name h1{margin:6px 0 0 0;font-size:22px}
+    .name p{margin:6px 0 0 0;color:var(--muted);font-size:13px}
 
-    .contact{
-      margin-top:16px;
-      display:grid;
+    .contact {
+      display:flex;
+      flex-direction:column;
       gap:8px;
-      font-size:13px;
-      color:var(--muted);
+      margin-top:14px;
     }
-    .contact a{color:inherit; text-decoration:none}
-    .chip{
+    .tag{
       display:flex;
       gap:8px;
       align-items:center;
-      background:var(--glass-2);
       padding:8px 10px;
+      background:var(--glass2);
       border-radius:999px;
-      font-weight:600;
-      font-size:13px;
-      color: #dce9ff;
+      font-weight:700;
+      color:#eaf2ff;
+      text-decoration:none;
+      width:max-content;
     }
 
-    /* Progress circles for quick stats (optional) */
-    .mini-stats{
+    .mini {
       display:flex;
       gap:10px;
-      margin-top:14px;
+      margin-top:16px;
       justify-content:center;
+      flex-wrap:wrap;
     }
-    .stat{
-      text-align:center;
-      font-size:12px;
-      color:var(--muted);
+    .mini .box{
+      background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
+      border-radius:10px;padding:10px 12px;font-size:13px;color:var(--muted);border:1px solid rgba(255,255,255,0.02)
     }
 
-    /* Right column (content) */
-    .content{
-      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.008));
-      border-radius:16px;
-      padding:20px;
-      border:1px solid var(--glass-border);
+    /* =========================
+       Right content
+       ========================= */
+    .main {
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.008));
+      border-radius:var(--radius);
+      padding:24px;
+      border:1px solid rgba(255,255,255,0.04);
       box-shadow: 0 10px 40px rgba(2,6,23,0.55);
+      position:relative;
     }
-    .row{
+
+    .nav {
+      position:sticky;
+      top:20px;
       display:flex;
-      gap:16px;
-      align-items:flex-start;
+      gap:12px;
+      justify-content:flex-end;
+      margin-bottom:12px;
+      z-index:30;
+    }
+    .nav a{
+      padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--muted);font-weight:700;font-size:13px;
+      background:transparent;border:1px solid rgba(255,255,255,0.02)
+    }
+    .nav a.primary{
+      background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:white;border:none;
+      box-shadow:0 8px 30px rgba(7,9,40,0.5);
+    }
+
+    /* Hero */
+    .hero{
+      display:flex;
+      gap:22px;
+      align-items:center;
+      justify-content:space-between;
       margin-bottom:18px;
     }
-    .title{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+    @media (max-width:920px){ .hero{flex-direction:column;align-items:flex-start} }
+
+    .hero-left{
+      max-width: 62%;
     }
-    h2{
-      margin:0 0 8px 0;
-      font-size:18px;
-      color: #eaf2ff;
-    }
-    p.lead{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.6;
+    @media (max-width:920px){ .hero-left{max-width:100%} }
+
+    .kicker{
+      color:var(--muted);font-weight:700;font-size:13px;margin-bottom:8px;
+      display:inline-flex;gap:8px;align-items:center;
     }
 
-    /* Experience timeline */
-    .timeline{
-      border-left:2px dashed rgba(255,255,255,0.03);
-      padding-left:18px;
-      margin-top:6px;
+    .headline{
+      font-size:30px;line-height:1.02;margin:0 0 12px 0;color:#f8fcff;
+      font-weight:800;
     }
-    .job{
-      margin-bottom:16px;
+    .sub{
+      color:var(--muted);font-size:15px;margin:0 0 12px 0;line-height:1.6;
+    }
+
+    .hero-cta{display:flex;gap:10px;align-items:center}
+    .btn{
+      padding:12px 16px;border-radius:10px;font-weight:800;text-decoration:none;color:white;
+      display:inline-flex;gap:10px;align-items:center;border:none;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));
+      box-shadow:0 10px 30px rgba(7,9,40,0.4)
+    }
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);font-weight:700}
+
+    /* right hero card (portrait + blob) */
+    .hero-right{
+      width:280px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       position:relative;
-      padding-left:14px;
     }
-    .job:before{
-      content:"";
-      width:12px;height:12px;border-radius:50%;
-      background:linear-gradient(90deg,var(--accent1),var(--accent2));
-      position:absolute;
-      left:-26px;
-      top:6px;
-      box-shadow:0 4px 12px rgba(12,20,40,0.6);
+    .blob{
+      position:absolute;right:-28px;top:-48px;width:300px;height:300px;border-radius:48% 52% 45% 55%/52% 48% 52% 48%;
+      background:linear-gradient(135deg,var(--accent-b),var(--accent-a));
+      filter:blur(36px);
+      opacity:.35;transform:rotate(-6deg);
     }
-    .job h3{
-      margin:0;
-      font-size:15px;
-      color:#fff;
+    .portrait{
+      width:220px;height:220px;border-radius:16px;overflow:hidden;border:6px solid rgba(255,255,255,0.03);
+      box-shadow:0 30px 80px rgba(7,9,40,0.6);background:#081224;display:flex;align-items:center;justify-content:center;
     }
-    .job .meta{
-      font-size:12px;
-      color:var(--muted);
-      margin-bottom:6px;
-    }
-    .job p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+    .portrait img{width:100%;height:100%;object-fit:cover;display:block}
 
-    /* Skills and languages */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(2, 1fr);
-      gap:14px;
-    }
-    .skill{
-      background:var(--glass-3);
-      padding:12px;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,0.02);
-    }
-    .skill h4{margin:0 0 8px 0;font-size:13px;color:#eaf2ff}
-    .skill .skill-list{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-    }
-    .badge{background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--muted)}
+    /* sections */
+    section.block{margin-top:18px}
+    h3.block-title{margin:0 0 8px 0;font-size:18px;color:#eaf2ff}
+    p.block-lead{color:var(--muted);margin:0 0 12px 0;line-height:1.6}
 
-    /* Language bar */
+    /* timeline */
+    .timeline{border-left:2px dashed rgba(255,255,255,0.03);padding-left:18px;margin-top:8px}
+    .role{margin-bottom:16px;position:relative;padding-left:14px}
+    .role:before{content:"";position:absolute;left:-26px;top:6px;width:12px;height:12px;border-radius:50%;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));box-shadow:0 6px 18px rgba(7,9,40,0.6)}
+    .role h4{margin:0;font-size:15px}
+    .role .meta{font-size:12px;color:var(--muted);margin-bottom:6px}
+    .role p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+
+    /* skills & languages grid */
+    .two-col{display:grid;grid-template-columns:1fr 320px;gap:18px}
+    @media (max-width:920px){ .two-col{grid-template-columns:1fr} }
+
+    .badges{display:flex;flex-wrap:wrap;gap:8px}
+    .pill{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,0.02);font-weight:700;font-size:13px;color:var(--muted)}
+
+    /* language bars */
     .lang{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-bottom:10px;
+      display:flex;align-items:center;gap:12px;margin-bottom:12px;
     }
-    .lang .lbl{width:110px;font-size:13px;color:var(--muted)}
+    .lang .lbl{width:110px;color:var(--muted);font-weight:700;font-size:13px}
     .bar-wrap{
-      flex:1;
-      background:linear-gradient(90deg, rgba(255,255,255,0.016), rgba(255,255,255,0.01));
-      border-radius:999px;
-      padding:6px;
-      height:18px;
-      display:flex;
-      align-items:center;
+      flex:1;background:linear-gradient(90deg, rgba(255,255,255,0.014), rgba(255,255,255,0.01));
+      border-radius:999px;padding:6px;height:18px;display:flex;align-items:center;
     }
     .bar{
-      height:100%;
-      border-radius:999px;
-      transition:width 1s cubic-bezier(.2,.9,.25,1);
-      background: linear-gradient(90deg,var(--accent1),var(--accent2));
-      box-shadow: 0 6px 18px rgba(7,10,30,0.6);
-      display:flex;
-      align-items:center;
-      justify-content:flex-end;
-      padding-right:8px;
-      font-size:12px;
-      color:#fff;
-      font-weight:600;
+      height:100%;border-radius:999px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;
+      font-weight:800;font-size:12px;color:white;transition:width 1000ms cubic-bezier(.2,.9,.25,1);
+      box-shadow:0 10px 30px rgba(2,6,23,0.6);
+      background:linear-gradient(90deg,var(--accent-a),var(--accent-b));
     }
 
-    /* Accomplishments */
-    .chips{display:flex;flex-wrap:wrap;gap:8px}
-    .chip-acc{background:linear-gradient(90deg,#0b1220, rgba(255,255,255,0.02)); border-radius:10px;padding:8px 10px;font-size:13px;color:var(--muted);border:1px solid rgba(255,255,255,0.02)}
+    /* small footer / contact */
+    .contact-grid{display:flex;gap:10px;flex-wrap:wrap}
+    footer.note{color:var(--muted);font-size:13px;margin-top:18px}
 
-    /* Footer / actions */
-    .actions{
-      display:flex;
-      gap:10px;
-      margin-top:18px;
-      align-items:center;
-    }
-    .btn{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      padding:10px 14px;
-      border-radius:10px;
-      font-weight:700;
-      text-decoration:none;
-      cursor:pointer;
-      border:none;
-      background:linear-gradient(90deg,var(--accent1),var(--accent2));
-      color:white;
-      box-shadow:0 8px 30px rgba(7,9,40,0.6);
-      transition:transform .18s ease, box-shadow .18s ease;
-    }
-    .btn:active{transform:translateY(1px)}
-    .btn.secondary{
-      background:transparent;
-      border:1px solid rgba(255,255,255,0.04);
-      color:var(--muted);
-      font-weight:600;
-    }
+    /* small reveal animation */
+    .reveal{opacity:0; transform: translateY(10px); transition: all 600ms cubic-bezier(.2,.9,.25,1); will-change:opacity,transform; }
+    .reveal.show{opacity:1; transform: translateY(0);}
 
-    /* Responsive */
-    @media (max-width:920px){
-      .wrap{grid-template-columns:1fr; padding-bottom:60px;}
-      .avatar{width:180px;height:180px}
-    }
+    /* utilities */
+    .muted{color:var(--muted)}
+    pre.small{font-size:12px;color:var(--muted);background:transparent;border-radius:8px;padding:6px}
 
-    /* little floaty decorations */
-    .float-dot{
-      position:absolute;
-      width:10px;height:10px;border-radius:50%;
-      background:rgba(255,255,255,0.03);
-      left:10px; top:10px;
-    }
-    .float-dot.alt{right:10px; left:auto; top:8px;}
-    .small-muted{color:var(--muted); font-size:13px}
-    .linkish{color:#bfefff;text-decoration:underline}
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <!-- LEFT CARD -->
-    <aside class="card" aria-label="Profile card">
-      <div class="float-dot"></div>
-      <div class="float-dot alt"></div>
-
-      <div class="photo" title="Avatar — replace with your photo.jpg if you have one">
-        <!-- SVG initial avatar; to use a real photo replace this SVG with:
-             <img src="photo.jpg" alt="Dhruv Saxena" style="width:220px;height:220px;border-radius:16px;object-fit:cover">
+  <div class="shell" role="main" aria-label="Dhruv Saxena portfolio">
+    <!-- LEFT PANEL -->
+    <aside class="panel" aria-labelledby="profile-heading">
+      <div class="profile-photo">
+        <!-- Replace the SVG with your own photo.jpg if you have it -->
+        <!-- To use a real photo: replace the <svg> block below with:
+             <div class="photo"><img src="photo.jpg" alt="Dhruv Saxena"></div>
         -->
-        <svg class="avatar" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DH avatar">
-          <defs>
-            <linearGradient id="g1" x1="0" x2="1">
-              <stop offset="0" stop-color="#7c3aed"/>
-              <stop offset="1" stop-color="#06b6d4"/>
-            </linearGradient>
-            <filter id="f1" x="-50%" y="-50%" width="200%" height="200%">
-              <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#07102a" flood-opacity="0.5"/>
-            </filter>
-          </defs>
-          <rect width="120" height="120" rx="16" fill="url(#g1)" filter="url(#f1)"/>
-          <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-size="50" fill="rgba(255,255,255,0.95)" font-weight="700" font-family="Inter, Arial">DS</text>
-        </svg>
-      </div>
-
-      <div class="name">
-        <h1>Dhruv Saxena</h1>
-        <p class="small-muted">ResearchGate Fellow · AI & ML · Student Partner · Quizzing champ</p>
-      </div>
-
-      <div class="contact" style="margin-top:14px;">
-        <div class="chip"><svg height="14" width="14" style="opacity:.85" viewBox="0 0 24 24" fill="none"><path d="M12 2v20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Varanasi, India</div>
-        <a class="chip" href="tel:+917080880393"><svg height="14" width="14" viewBox="0 0 24 24" fill="none"><path d="M22 16.92V21a1 1 0 0 1-1.11 1A20 20 0 0 1 3 4.11 1 1 0 0 1 4 3h4.09a1 1 0 0 1 1 .75c.12.86.36 1.7.71 2.5a1 1 0 0 1-.24 1L8.91 9.91c1.86 3.73 5.3 7.17 9.03 9.03l1.65-1.65a1 1 0 0 1 1-.24c.8.35 1.64.59 2.5.71a1 1 0 0 1 .75 1V22z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg> +91 7080880393</a>
-        <a class="chip" href="mailto:dhruvisgood13@gmail.com">✉ dhruvisgood13@gmail.com</a>
-        <a class="chip" href="https://www.linkedin.com/in/dhruv-saxena-3a2b4e7a/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="chip" href="https://github.com/dhruvisgood" target="_blank" rel="noopener">GitHub</a>
-        <a class="chip" href="rhfb.pdf" download>📄 Download Resume</a>
-      </div>
-
-      <div style="margin-top:16px;display:flex;gap:10px;justify-content:center;">
-        <div class="mini-stats">
-          <div class="stat">
-            <div style="font-size:18px;font-weight:800">AI</div>
-            <div class="small-muted">Deep interest</div>
-          </div>
-          <div class="stat">
-            <div style="font-size:18px;font-weight:800">Quizzes</div>
-            <div class="small-muted">International wins</div>
-          </div>
+        <div class="photo" aria-hidden="true">
+          <svg width="240" height="240" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DS">
+            <defs>
+              <linearGradient id="gA" x1="0" x2="1">
+                <stop offset="0" stop-color="#7c3aed"/>
+                <stop offset="1" stop-color="#06b6d4"/>
+              </linearGradient>
+            </defs>
+            <rect width="120" height="120" rx="16" fill="url(#gA)"/>
+            <text x="50%" y="55%" fill="#fff" font-size="36" text-anchor="middle" font-weight="800" font-family="Inter, Arial">DS</text>
+          </svg>
         </div>
       </div>
 
-      <div style="margin-top:18px">
-        <div class="small-muted" style="margin-bottom:6px;font-weight:700">Quick summary</div>
-        <p class="small-muted" style="line-height:1.5;margin:0">
-          Dedicated ResearchGate Fellow with a strong background in AI development, deep scientific writing, leadership, and creation of the AI tool <strong>ImagoPedia</strong>. Published research, international quiz awards, and experience collaborating with IITBHU, UPPEN, and Cambridge.
+      <div id="profile-heading" class="name">
+        <h1>Dhruv Saxena</h1>
+        <p class="muted">ResearchGate Fellow · AI / ML · Quizzer · Student Partner</p>
+      </div>
+
+      <div class="contact" style="margin-top:14px">
+        <a class="tag" href="mailto:dhruvisgood13@gmail.com">✉ dhruvisgood13@gmail.com</a>
+        <a class="tag" href="tel:+917080880393">📞 +91 7080880393</a>
+        <a class="tag" href="https://github.com/dhruvisgood" target="_blank" rel="noopener">GitHub</a>
+        <a class="tag" href="https://www.linkedin.com/in/dhruv-saxena-3a2b4e7a/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="tag" href="rhfb.pdf" download>📄 Resume (PDF)</a>
+      </div>
+
+      <div class="mini" aria-hidden="true">
+        <div class="box"><strong>AI</strong> research</div>
+        <div class="box">Quizzing — national/international</div>
+      </div>
+
+      <div style="margin-top:16px">
+        <p class="muted" style="margin:6px 0 8px 0;font-weight:800">Quick summary</p>
+        <p class="muted" style="margin:0;line-height:1.5">
+          ResearchGate Fellow & student partner with experience building AI tools (ImagoPedia), publishing research, and leading science/quiz clubs. Comfortable in Python, ML stacks, and scientific writing.
         </p>
       </div>
-
     </aside>
 
-    <!-- RIGHT CONTENT -->
-    <section class="content" aria-label="Resume content">
-      <div class="title">
-        <h2>Experience</h2>
-        <div class="small-muted">Latest roles & highlights</div>
-      </div>
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#resume">Resume</a>
+        <a class="primary" href="#contact">Contact</a>
+      </nav>
 
-      <div class="timeline" aria-hidden="false">
-        <!-- Student Comet -->
-        <div class="job">
-          <h3>Partner — Student Comet (Remote)</h3>
-          <div class="meta">Oct 2025 — Current</div>
-          <p>
-            Joined forces with fellow students to promote campus events and initiatives to popularize Comet Browser. Organized workshops and activities for student engagement.
-          </p>
+      <!-- HERO -->
+      <header class="hero">
+        <div class="hero-left">
+          <div class="kicker">Hello — I'm Dhruv</div>
+          <h1 class="headline">I build AI tools, write research, and win quizzes — I make ideas behave.</h1>
+          <p class="sub">Research Fellowship in biological neural simulations, author of ImagoPedia, collaborator with IITBHU & Cambridge, and active participant in international quizzing circuits.</p>
+
+          <div class="hero-cta">
+            <a class="btn" href="rhfb.pdf" download>Download CV</a>
+            <a class="btn ghost" href="#projects">Explore Projects</a>
+          </div>
         </div>
 
-        <!-- InternShala Student Partner -->
-        <div class="job">
-          <h3>Student Partner — InternShala (Remote, India)</h3>
-          <div class="meta">Sep 2025 — Current</div>
-          <p>
-            Promoted internship opportunities via social media and campus events. Student Ambassador at Sunbeam Lahartara.
-          </p>
-        </div>
-
-        <!-- Junior Research Fellow -->
-        <div class="job">
-          <h3>Junior Research Fellow — ResearchGate (Varanasi, India)</h3>
-          <div class="meta">Sep 2025 — Current</div>
-          <p>
-            Conducted comprehensive literature, scientific and mathematical reviews; collaborated with experts from IITBHU, UPPEN, and Cambridge. Worked on neural-network simulations of biological systems. Provided advanced GPT-5 access and domain resources.
-          </p>
-        </div>
-
-        <!-- Research Fellow -->
-        <div class="job">
-          <h3>Research Fellow — Next Voters (Remote)</h3>
-          <div class="meta">Sep 2025 — Current</div>
-          <p>
-            Fellowship focused on developing democracy through AI & technology. Engaged with professors from UPPEN and Stanford to strengthen scholarly work.
-          </p>
-        </div>
-      </div>
-
-      <hr style="opacity:.06;border:none;border-top:1px solid rgba(255,255,255,0.03);margin:20px 0">
-
-      <div class="row">
-        <div style="flex:1 1 60%">
-          <h2>Education & Training</h2>
-          <p class="lead">
-            <strong>Sunbeam School Lahartara (Varanasi, India)</strong><br>
-            Status: Current. Achievements: National Topper Award; IMO Gold; IEO Gold; School Super Luminary; Scholarship holder (Class IX — 96.13%). Founding member of Young Society Science Club and content writer/quizzer for Dynamic Science Club.
-          </p>
-          <p class="small-muted" style="margin-top:8px">
-            Dissertation & interests: Programming, AI & ML Development, APIs, Physics, Mathematics (Calc I/II), Biology, Chemistry, Biogenomics, Aerodynamics.
-          </p>
-        </div>
-
-        <div style="flex:1 1 40%">
-          <h2>Key Skills</h2>
-          <div class="grid" style="margin-top:10px">
-            <div class="skill">
-              <h4>Project & Research</h4>
-              <div class="skill-list">
-                <span class="badge">Project management</span>
-                <span class="badge">Research analysis</span>
-                <span class="badge">Team collaboration</span>
-                <span class="badge">Scientific writing</span>
-                <span class="badge">Problem-solving</span>
-              </div>
-            </div>
-
-            <div class="skill">
-              <h4>Programming & Data Science</h4>
-              <div class="skill-list" style="margin-top:4px">
-                <span class="badge">Python</span>
-                <span class="badge">NumPy</span>
-                <span class="badge">Pandas</span>
-                <span class="badge">Matplotlib</span>
-                <span class="badge">ML / DL / NLP</span>
-                <span class="badge">Computer Vision</span>
-                <span class="badge">DSA</span>
-                <span class="badge">SQL</span>
-              </div>
+        <div class="hero-right" aria-hidden="true">
+          <div class="blob" aria-hidden="true"></div>
+          <div class="portrait">
+            <!-- Replace with your real photo.jpg (drop it into repo) -->
+            <img src="photo.jpg" alt="Dhruv Saxena" onerror="this.style.display='none';">
+            <!-- fallback minimal card -->
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);padding:18px;">
+              <div style="font-weight:800;font-size:22px;color:#fff">Dhruv Saxena</div>
+              <div style="font-size:12px;margin-top:6px">Research | AI | Quizzing</div>
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      <hr style="opacity:.06;border:none;border-top:1px solid rgba(255,255,255,0.03);margin:18px 0">
+      <!-- ABOUT / PROJECTS -->
+      <section id="about" class="block reveal">
+        <h3 class="block-title">About me</h3>
+        <p class="block-lead">I love building things that learn. From prototyping neural models to making consumer-facing AI tools (ImagoPedia), I combine deep curiosity with engineering discipline.</p>
 
-      <div class="row">
-        <div style="flex:1 1 60%">
-          <h2>Languages</h2>
-          <p class="small-muted" style="margin:6px 0 12px 0">Proficiency levels (bars show approximate competency):</p>
-
-          <!-- Language bars: values are percentages (you can tweak) -->
-          <div id="languages">
-            <div class="lang">
-              <div class="lbl">English</div>
-              <div class="bar-wrap" aria-hidden="true">
-                <div class="bar" data-pct="85" style="width:0%">85%</div>
-              </div>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:12px">
+          <div style="min-width:220px">
+            <h4 style="margin:0 0 8px 0">Key focus</h4>
+            <div class="badges">
+              <span class="pill">AI / ML</span>
+              <span class="pill">Computer Vision</span>
+              <span class="pill">NLP</span>
+              <span class="pill">Scientific writing</span>
             </div>
+          </div>
 
-            <div class="lang">
-              <div class="lbl">Hindi</div>
-              <div class="bar-wrap">
-                <div class="bar" data-pct="95" style="width:0%">95%</div>
-              </div>
+          <div style="flex:1;min-width:260px">
+            <h4 style="margin:0 0 8px 0">Tools</h4>
+            <div class="badges">
+              <span class="pill">Python</span>
+              <span class="pill">PyTorch</span>
+              <span class="pill">NumPy</span>
+              <span class="pill">Pandas</span>
+              <span class="pill">SQL</span>
+              <span class="pill">Git</span>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div class="lang">
-              <div class="lbl">French</div>
-              <div class="bar-wrap">
-                <div class="bar" data-pct="30" style="width:0%">30%</div>
-              </div>
-            </div>
+      <section id="projects" class="block reveal">
+        <h3 class="block-title">Selected projects</h3>
+        <div style="display:grid;gap:12px;margin-top:10px">
+          <article style="padding:12px;border-radius:10px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.02)">
+            <h4 style="margin:0 0 6px 0">ImagoPedia · AI tool</h4>
+            <p class="muted" style="margin:0">Image understanding & knowledge retrieval platform I helped design and prototype — integrates visual embeddings with RAG-style retrieval.</p>
+          </article>
 
-            <div class="lang">
-              <div class="lbl">Japanese</div>
-              <div class="bar-wrap">
-                <div class="bar" data-pct="15" style="width:0%">15%</div>
-              </div>
-            </div>
+          <article style="padding:12px;border-radius:10px;background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.02)">
+            <h4 style="margin:0 0 6px 0">Neural simulations — biologically-inspired models</h4>
+            <p class="muted" style="margin:0">Simulations of small networks for research projects with collaborators from IITBHU and Cambridge (literature review, modeling, and evaluation).</p>
+          </article>
+        </div>
+      </section>
 
-            <div class="lang">
-              <div class="lbl">Bengali</div>
-              <div class="bar-wrap">
-                <div class="bar" data-pct="15" style="width:0%">15%</div>
-              </div>
+      <!-- RESUME (experience, education, languages) -->
+      <section id="resume" class="block reveal">
+        <h3 class="block-title">Experience & Education</h3>
+
+        <div class="timeline" style="margin-top:10px">
+          <div class="role">
+            <h4>Junior Research Fellow — ResearchGate (Varanasi)</h4>
+            <div class="meta">Sep 2025 — Current</div>
+            <p class="muted">Literature reviews, neural-network simulations, domain access & research contributions collaborating with IITBHU, UPPEN & Cambridge.</p>
+          </div>
+
+          <div class="role">
+            <h4>Research Fellow — Next Voters (Remote)</h4>
+            <div class="meta">Sep 2025 — Current</div>
+            <p class="muted">Fellowship to explore AI for democratic engagement and research communication.</p>
+          </div>
+
+          <div class="role">
+            <h4>Student Partner — InternShala / Perplexity / Student Comet</h4>
+            <div class="meta">2024 — Current</div>
+            <p class="muted">Ambassador & campus promotion for internship platforms and AI tools.</p>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:18px;margin-top:18px;flex-wrap:wrap">
+          <div style="flex:1;min-width:260px">
+            <h4 style="margin:0 0 8px 0">Education</h4>
+            <p class="muted" style="margin:0">Sunbeam School Lahartara — Current. Awards: IMO Gold, IEO Gold, INSPIRE MANAK awardee. Scholarship & top scores.</p>
+          </div>
+
+          <div style="width:320px">
+            <h4 style="margin:0 0 8px 0">Skills</h4>
+            <div class="badges">
+              <span class="pill">Python</span>
+              <span class="pill">NLP</span>
+              <span class="pill">Computer Vision</span>
+              <span class="pill">Research</span>
+              <span class="pill">Public speaking</span>
             </div>
           </div>
         </div>
 
-        <div style="flex:1 1 40%">
-          <h2>Accomplishments</h2>
-          <div class="chips" style="margin-top:8px">
-            <div class="chip-acc">ResearchGate Fellow</div>
-            <div class="chip-acc">ImagoPedia (AI Tool)</div>
-            <div class="chip-acc">Next Voters Fellow</div>
-            <div class="chip-acc">Perplexity Student Partner</div>
-            <div class="chip-acc">InternShala Student Partner</div>
-            <div class="chip-acc">INSPIRE MANAK awardee</div>
-            <div class="chip-acc">Co-Lead Dynamic Science Club</div>
-            <div class="chip-acc">GeeksforGeeks CS & Math for AI cert</div>
-            <div class="chip-acc">Google Certified — AI & ML</div>
-            <div class="chip-acc">NVIDIA DLI — LLM dev student</div>
-            <div class="chip-acc">IBM Certified — Quantum Computing</div>
+      </section>
+
+      <!-- LANGUAGES with bars -->
+      <section class="block reveal" style="margin-top:18px">
+        <h3 class="block-title">Languages</h3>
+        <p class="muted" style="margin:6px 0 12px 0">Proficiency bars — animated on load.</p>
+
+        <div>
+          <!-- each .bar has data-pct attribute. JS animates widths. -->
+          <div class="lang">
+            <div class="lbl">English</div>
+            <div class="bar-wrap" aria-hidden="true">
+              <div class="bar" data-pct="85" style="width:0%">85%</div>
+            </div>
+          </div>
+
+          <div class="lang">
+            <div class="lbl">Hindi</div>
+            <div class="bar-wrap">
+              <div class="bar" data-pct="95" style="width:0%">95%</div>
+            </div>
+          </div>
+
+          <div class="lang">
+            <div class="lbl">French</div>
+            <div class="bar-wrap">
+              <div class="bar" data-pct="30" style="width:0%">30%</div>
+            </div>
+          </div>
+
+          <div class="lang">
+            <div class="lbl">Japanese</div>
+            <div class="bar-wrap">
+              <div class="bar" data-pct="15" style="width:0%">15%</div>
+            </div>
+          </div>
+
+          <div class="lang">
+            <div class="lbl">Bengali</div>
+            <div class="bar-wrap">
+              <div class="bar" data-pct="15" style="width:0%">15%</div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <hr style="opacity:.06;border:none;border-top:1px solid rgba(255,255,255,0.03);margin:18px 0">
+      <!-- CONTACT -->
+      <section id="contact" class="block reveal">
+        <h3 class="block-title">Get in touch</h3>
+        <p class="muted">Prefer email? I respond quickly to research & collab requests.</p>
 
-      <div class="row" style="align-items:center;">
-        <div style="flex:1">
-          <h2>Profile</h2>
-          <p class="lead">
-            A dedicated ResearchGate Fellow with expertise across AI & ML, scientific writing, and tool-building (ImagoPedia). Active in research collaborations, seminars, and competitive quizzing. Passionate about continuous learning and applying cutting-edge AI tech.
-          </p>
+        <div style="margin-top:12px" class="contact-grid">
+          <a class="btn" href="mailto:dhruvisgood13@gmail.com">Email me</a>
+          <a class="btn ghost" href="https://github.com/dhruvisgood" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn ghost" href="https://www.linkedin.com/in/dhruv-saxena-3a2b4e7a/" target="_blank" rel="noopener">LinkedIn</a>
         </div>
-        <div style="width:220px;">
-          <div class="small-muted" style="margin-bottom:6px;font-weight:700">Links</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <a class="btn" href="https://github.com/dhruvisgood" target="_blank" rel="noopener">GitHub · dhruvisgood</a>
-            <a class="btn secondary" href="https://www.linkedin.com/in/dhruv-saxena-3a2b4e7a/" target="_blank" rel="noopener">LinkedIn</a>
-          </div>
-        </div>
-      </div>
 
-      <div class="actions">
-        <a class="btn" href="mailto:dhruvisgood13@gmail.com">Email Dhruv</a>
-        <button class="btn secondary" id="printBtn">Print / Save PDF</button>
-      </div>
+        <footer class="note">Drop <code>photo.jpg</code> to replace the portrait. Resume available as <a href="rhfb.pdf" class="muted" download>rhfb.pdf</a>.</footer>
+      </section>
 
-      <footer style="margin-top:18px;color:var(--muted);font-size:13px">
-        Crafted with ❤️ — drop your real photo as <code>photo.jpg</code> in the same folder to replace the avatar. Resume PDF: <a class="linkish" href="rhfb.pdf" download>rhfb.pdf</a>
-      </footer>
+    </main>
+  </div>
 
-    </section>
-  </main>
-
+  <!-- ===========================
+       JS: small helper animations & smooth scroll
+       =========================== -->
   <script>
-    // Small "experienced coding genius" JS to animate bars and allow print.
     (function(){
-      // Animate language bars after load
+      // Smooth scroll for nav anchors
+      document.querySelectorAll('a[href^="#"]').forEach(function(a){
+        a.addEventListener('click', function(e){
+          var target = document.querySelector(this.getAttribute('href'));
+          if(target){
+            e.preventDefault();
+            window.scrollTo({top: target.getBoundingClientRect().top + window.scrollY - 18, behavior:'smooth'});
+          }
+        });
+      });
+
+      // Animate bars on DOMContentLoaded
       function animateBars(){
         document.querySelectorAll('.bar').forEach(function(el, i){
-          var pct = Number(el.getAttribute('data-pct')) || 0;
-          // small easing stagger
+          var pct = Number(el.dataset.pct) || 0;
           setTimeout(function(){
             el.style.width = pct + '%';
-            // update text to show percent only when width animation is done
-            setTimeout(function(){
-              el.textContent = pct + '%';
-            }, 400);
-          }, 200 + i*120);
+            // small delay to set number text after animation starts
+            setTimeout(function(){ el.textContent = pct + '%'; }, 350);
+          }, 200 + i*100);
         });
       }
 
-      // On DOM ready
-      document.addEventListener('DOMContentLoaded', function(){
-        animateBars();
-
-        // Print button
-        var printBtn = document.getElementById('printBtn');
-        printBtn.addEventListener('click', function(){
-          // open print friendly version (just print this page)
-          window.print();
-        });
-
-        // keyboard quick shot: press "D" to download resume PDF
-        document.addEventListener('keydown', function(e){
-          if(e.key === 'd' || e.key === 'D'){
-            window.location.href = 'rhfb.pdf';
+      // simple scroll reveal for .reveal elements
+      function revealOnScroll(){
+        var reveals = document.querySelectorAll('.reveal');
+        var windowH = window.innerHeight;
+        reveals.forEach(function(el){
+          var rect = el.getBoundingClientRect();
+          if(rect.top <= windowH - 80){
+            el.classList.add('show');
           }
         });
+      }
 
+      // init
+      document.addEventListener('DOMContentLoaded', function(){
+        animateBars();
+        revealOnScroll();
+        window.addEventListener('scroll', revealOnScroll);
+        // keyboard shortcuts
+        document.addEventListener('keydown', function(e){
+          if((e.key==='p' || e.key==='P') && (e.ctrlKey || e.metaKey)){
+            e.preventDefault();
+            window.print();
+          }
+        });
       });
 
-      // friendly little resize - reanimate on focus (if user navigates back)
-      window.addEventListener('focus', function(){ animateBars(); });
+      // accessibility: prefers-reduced-motion
+      var q = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if(q.matches){
+        document.querySelectorAll('.bar').forEach(function(el){ el.style.transition = 'none'; });
+        document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('show'); });
+      }
     })();
   </script>
 </body>
 </html>
-
