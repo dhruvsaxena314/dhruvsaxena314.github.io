@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply font-sans antialiased;
+}
+.card {
+  @apply bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6;
+}
