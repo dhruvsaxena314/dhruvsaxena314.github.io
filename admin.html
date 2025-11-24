@@ -1,117 +1,103 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Admin — Dhruv Saxena</title>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body{font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;max-width:900px;margin:28px auto;padding:18px}
-    .box{border:1px solid #ddd;padding:16px;border-radius:10px;margin-top:12px}
-    input,textarea,select{width:100%;padding:8px;margin-top:8px;border-radius:8px;border:1px solid #bbb}
-    button{padding:10px 14px;border-radius:8px;border:none;background:#000;color:#fff;cursor:pointer;margin-top:10px}
-    small{color:#666}
+    body{font-family:sans-serif;padding:20px;max-width:800px;margin:auto;}
+    .box{border:1px solid #ccc;padding:20px;border-radius:12px;margin-top:20px;}
+    input,textarea{width:100%;padding:8px;margin-top:8px;}
+    button{padding:10px 16px;margin-top:12px;cursor:pointer;}
   </style>
 </head>
 <body>
+
   <h1>Admin Panel</h1>
 
-  <div id="login" class="box">
-    <h3>Unlock (passkey required)</h3>
-    <input id="passkey" type="password" placeholder="Enter passkey">
-    <small>Hint: it's the passkey you gave me.</small>
-    <div style="margin-top:10px">
-      <button id="unlockBtn">Unlock</button>
-    </div>
+  <!-- LOGIN -->
+  <div id="loginBox" class="box">
+    <h3>Enter Admin Passkey</h3>
+    <input type="password" id="passkey" placeholder="Passkey">
+    <button onclick="login()">Unlock</button>
   </div>
 
-  <div id="admin" class="box" style="display:none">
-    <h3>Create / Publish Blog</h3>
-    <input id="postTitle" placeholder="Title (required)">
-    <textarea id="postBody" rows="6" placeholder="Content (markdown/plain)"></textarea>
-    <label style="display:block;margin-top:8px"><small>File path (will be created/overwritten)</small></label>
-    <input id="postPath" placeholder="e.g. content/blogs/my-new-post.md">
-    <div style="display:flex;gap:8px">
-      <button id="publishBtn">Publish</button>
-      <button id="previewBtn" type="button">Show JSON (debug)</button>
-    </div>
-    <div id="status" style="margin-top:10px;color:green"></div>
+  <!-- ADMIN BOX -->
+  <div id="adminBox" class="box" style="display:none;">
+    <h3>Create Blog Post</h3>
+    <input id="title" placeholder="Title">
+    <textarea id="body" placeholder="Content"></textarea>
+    <button onclick="submitPost()">Submit</button>
+
+    <p style="margin-top:20px;color:#777;">
+      ✔ When you press submit, a GitHub Action updates your site with the new blog.
+    </p>
   </div>
+
 
 <script>
-/*
-  Security design:
-   - Client stores only a SHA-256 hash of the passkey; the real passkey is never embedded.
-   - Admin UI posts to BACKEND_URL which you deploy; backend performs GitHub commits using a secret PAT in its env.
-   - You must set BACKEND_URL to your serverless endpoint before using.
-*/
+/* ---------------------------------------------------------------------------------
+   PASSKEY LOGIN SYSTEM
+-----------------------------------------------------------------------------------*/
 
-/* ========== CONFIG ========== */
-const PASS_HASH = "bb6f326269b69e54a65f57a90828b210d43ede67cee537bcb305be3b05529224"; // sha256('dhruvhere')
-const BACKEND_URL = "https://YOUR_BACKEND_ENDPOINT.example.com/api/update"; // <-- REPLACE with your backend URL
-/* ============================ */
+// hash of "dhruvhere"
+const PASS_HASH = "e66a9c87cba76b27ead2a6254ceb6c2c49aaabb8ca0b1121e86bf60ec53ba32a";
 
-async function sha256hex(str){
-  const buf = new TextEncoder().encode(str);
-  const h = await crypto.subtle.digest('SHA-256', buf);
-  return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');
+async function sha256(txt){
+  const enc = new TextEncoder().encode(txt);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf))
+    .map(b=>b.toString(16).padStart(2,'0')).join('');
 }
 
-document.getElementById('unlockBtn').addEventListener('click', async ()=>{
-  const val = document.getElementById('passkey').value || '';
-  const h = await sha256hex(val);
-  if(h === PASS_HASH){
-    document.getElementById('login').style.display = 'none';
-    document.getElementById('admin').style.display = 'block';
+async function login(){
+  const val = document.getElementById("passkey").value.trim();
+  const hash = await sha256(val);
+
+  if(hash === PASS_HASH){
+    document.getElementById("loginBox").style.display="none";
+    document.getElementById("adminBox").style.display="block";
   } else {
-    alert('Incorrect passkey');
+    alert("Wrong Passkey");
   }
-});
+}
 
-document.getElementById('publishBtn').addEventListener('click', async ()=>{
-  if(BACKEND_URL.includes('YOUR_BACKEND_ENDPOINT')){
-    return alert('Set BACKEND_URL in admin.html to your deployed backend endpoint before publishing.');
+
+/* ---------------------------------------------------------------------------------
+   SUBMIT BLOG → SEND TO GITHUB ACTION
+-----------------------------------------------------------------------------------*/
+
+async function submitPost(){
+  const title = document.getElementById("title").value.trim();
+  const body  = document.getElementById("body").value.trim();
+
+  if(!title || !body){
+    alert("Fill everything!");
+    return;
   }
-  const title = document.getElementById('postTitle').value.trim();
-  const body  = document.getElementById('postBody').value.trim();
-  let path   = document.getElementById('postPath').value.trim();
-  if(!title || !path){ return alert('Title and file path are required'); }
-  // Build content; you can customize format (here: simple markdown frontmatter + body)
-  const fileContent = `---\ntitle: "${title}"\ndate: "${new Date().toISOString()}"\n---\n\n${body}\n`;
+
   const payload = {
-    path: path,
-    content: fileContent
+    title,
+    body,
+    timestamp: Date.now()
   };
-  setStatus('Publishing...');
-  try{
-    const res = await fetch(BACKEND_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    const txt = await res.text();
-    if(res.ok){
-      setStatus('Published successfully.');
-      console.log('Backend response:', txt);
-    } else {
-      setStatus('Publish failed: ' + res.status + ' - see console');
-      console.error('Publish error:', res.status, txt);
-      alert('Publish failed — check console for details.');
-    }
-  }catch(err){
-    setStatus('Publish failed (network)');
-    console.error(err);
-    alert('Network error while contacting backend.');
-  }
-});
 
-document.getElementById('previewBtn').addEventListener('click', ()=>{
-  const title = document.getElementById('postTitle').value.trim();
-  const body  = document.getElementById('postBody').value.trim();
-  const path  = document.getElementById('postPath').value.trim();
-  alert(JSON.stringify({ path, title, body }, null, 2));
-});
+  await fetch("https://api.github.com/repos/dhruvsaxena314/dhruvsaxena314.github.io/dispatches", {
+    method: "POST",
+    headers: {
+      "Accept": "application/vnd.github+json",
+      "Authorization": "Bearer YOUR_API_TOKEN_HERE",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      event_type: "new_blog",
+      client_payload: payload
+    })
+  });
 
-function setStatus(txt){ document.getElementById('status').textContent = txt; }
+  alert("Blog submitted! Waiting for GitHub to update your site.");
+}
 </script>
+
 </body>
 </html>
