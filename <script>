@@ -1,0 +1,17 @@
+window.GITHUB_SYNC_ENDPOINT = "https://dhruvsaxena314-github-io.vercel.app/api/trigger";
+window.GH_TRIGGER_TOKEN = "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";
+
+function saveSiteData(DATA){
+  localStorage.setItem("siteData", JSON.stringify(DATA));
+
+  fetch(window.GITHUB_SYNC_ENDPOINT,{
+    method:"POST",
+    headers:{
+      "Content-Type": "application/json",
+      "x-admin-token": window.GH_TRIGGER_TOKEN
+    },
+    body: JSON.stringify(DATA)
+  })
+  .then(res => console.log("✅ GitHub sync:", res.status))
+  .catch(err => console.error("❌ GitHub sync failed:", err));
+}
