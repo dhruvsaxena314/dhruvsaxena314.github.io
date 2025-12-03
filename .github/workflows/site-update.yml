@@ -1,0 +1,27 @@
+name: Website Admin Save
+
+on:
+  repository_dispatch:
+    types: [site-update]
+
+permissions:
+  contents: write
+
+jobs:
+  save:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Write website data
+        run: |
+          mkdir -p data
+          echo '${{ toJSON(github.event.client_payload, pretty=true) }}' > data/site-data.json
+
+          git config user.name "site-bot"
+          git config user.email "bot@github.com"
+
+          git add data/site-data.json
+          git commit -m "Admin panel update"
+          git push
