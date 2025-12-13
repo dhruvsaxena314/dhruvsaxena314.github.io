@@ -1,449 +1,886 @@
+
+# Dhruv Saxena #
+
 <!doctype html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="utf-8" />
+
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dhruv Saxena — Portfolio (Rewritten)</title>
+
+  <title>Dhruv Saxena — Portfolio</title>
+
   <style>
-    :root{--bg:#0f1724;--card:#0b1220;--muted:#94a3b8;--accent:#7c3aed}
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071027 0%,#0b1220 100%);color:#e6eef8;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
-    header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:rgba(255,255,255,0.02);backdrop-filter:blur(6px)}
-    .brand{display:flex;gap:12px;align-items:center}
-    .brand h1{margin:0;font-size:18px}
-    nav a{color:var(--muted);text-decoration:none;margin:0 10px;font-weight:600}
-    nav a.active{color:white;border-bottom:2px solid var(--accent);padding-bottom:6px}
-    main{padding:28px;max-width:1100px;margin:18px auto}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:12px;box-shadow:0 6px 24px rgba(2,6,23,0.6)}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
-    .col-4{grid-column:span 4}
-    .col-8{grid-column:span 8}
-    .small{font-size:13px;color:var(--muted)}
-    .list-item{padding:12px;border-radius:8px;background:rgba(255,255,255,0.01);margin-bottom:10px}
-    .btn{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:700}
-    .muted{color:var(--muted)}
-    .center{display:flex;align-items:center;justify-content:center}
-    .page{display:none}
-    .page.active{display:block}
-    .thumb{height:84px;width:120px;border-radius:8px;object-fit:cover}
-    .admin-note{font-size:13px;color:#ffdcdc}
-    input,textarea,select{width:100%;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
-    label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
-    .flex{display:flex;gap:12px;align-items:center}
-    .accomplishment{cursor:pointer;transition:transform .18s}
-    .accomplishment:hover{transform:scale(1.02)}
-    footer{padding:18px;text-align:center;color:var(--muted)}
-    .danger{background:#7f1d1d}
-    pre{white-space:pre-wrap;word-break:break-word}
+
+    :root{
+
+      --max-width:980px;
+
+      --gap:20px;
+
+      --radius:14px;
+
+      --accent:#000;
+
+      --muted: rgba(0,0,0,0.65);
+
+      --bg:#fff;
+
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+
+      margin:0; font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
+
+      background:var(--bg); color:var(--accent); -webkit-font-smoothing:antialiased;
+
+    }
+
+
+    /* top sticky mini menu */
+
+    #miniMenu{
+
+      position:fixed; top:0; left:0; right:0; height:56px;
+
+      display:flex; align-items:center; justify-content:center;
+
+      gap:18px; background:rgba(255,255,255,0.98); border-bottom:1px solid #111; z-index:40;
+
+    }
+
+    #miniMenu a{ text-decoration:none; color:var(--accent); font-weight:600; font-size:14px;}
+
+
+    /* header banner */
+
+    header{
+
+      margin-top:56px;
+
+      height:260px; border-bottom:2px solid #000; display:flex; align-items:center; justify-content:center;
+
+      overflow:hidden; border-radius:0 0 var(--radius) var(--radius); background:#efefef;
+
+    }
+
+    header img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+
+    /* layout */
+
+    .wrap{ max-width:var(--max-width); margin:28px auto; padding:0 20px; animation:fadeUp .5s ease; }
+
+    @keyframes fadeUp{ from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none} }
+
+
+    section{ background:#fff; border:1px solid #000; padding:22px; border-radius:var(--radius); margin-bottom:20px; }
+
+
+    /* profile block */
+
+    .profile{
+
+      display:flex; gap:var(--gap); align-items:center; justify-content:center; flex-wrap:wrap;
+
+    }
+
+    .profile-pic{
+
+      width:220px; height:220px; border-radius:16px; overflow:hidden; border:2px solid #000; flex:0 0 220px;
+
+      display:flex; align-items:center; justify-content:center; background:#f5f5f5;
+
+    }
+
+    .profile-pic img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+
+    .profile-meta{ max-width:640px; flex:1 1 420px; }
+
+    .name-row{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+
+    .name-row h1{ margin:0; font-size:26px; letter-spacing:-0.2px; }
+
+    .age-badge{
+
+      font-weight:800; font-size:56px; opacity:.12; line-height:1; padding-left:6px;
+
+      display:inline-block; transform:translateY(4px);
+
+    }
+
+    .meta-small{ color:var(--muted); margin:10px 0; }
+
+
+    /* skills bars */
+
+    .bar{ height:16px; background:#eee; border-radius:10px; overflow:hidden; margin:8px 0; }
+
+    .bar > i{ display:block; height:100%; background:#000; width:0; transition:width .9s cubic-bezier(.2,.9,.3,1); }
+
+
+    /* experiences */
+
+    .list .item{ border-radius:12px; padding:12px; margin-bottom:8px; border:1px solid #111; background:#fff; }
+
+    .item .title-row{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+
+    .item h4{ margin:0; font-size:16px; }
+
+    .item .controls{ display:flex; gap:8px; align-items:center; }
+
+    .item .controls button{ font-size:13px; padding:6px 8px; border-radius:8px; border:none; background:#000; color:#fff; cursor:pointer; }
+
+
+    .details{ margin-top:10px; color:var(--muted); display:none; }
+
+
+    /* forms */
+
+    .form-row{ display:grid; gap:8px; grid-template-columns:1fr; margin-top:10px; }
+
+    input[type="text"], input[type="password"], input[type="email"], textarea{
+
+      padding:10px; border-radius:10px; border:1px solid #111; font-size:14px;
+
+      width:100%;
+
+    }
+
+    input[type="file"]{ font-size:13px; }
+
+    button.primary{ background:#000; color:#fff; padding:10px 14px; border-radius:10px; border:none; cursor:pointer;}
+
+
+    /* responsive tweaks */
+
+    @media (max-width:720px){
+
+      .age-badge{ font-size:36px; opacity:.14; }
+
+      .profile-pic{ width:170px; height:170px; flex-basis:170px; }
+
+      header{height:180px}
+
+    }
+
+    /* subtle helpers */
+
+    .muted{ color:var(--muted); font-size:13px }
+
   </style>
+
 </head>
+
 <body>
-  <header>
-    <div class="brand">
-      <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36'><rect rx='8' width='36' height='36' fill='%237c3aed'/></svg>" alt="logo" style="height:36px;width:36px;border-radius:8px"/>
-      <div>
-        <h1>Dhruv Saxena</h1>
-        <div class="small">Developer · Educator · Maker</div>
-      </div>
-    </div>
-    <nav>
-      <a href="#home" data-link="home" class="active">Home</a>
-      <a href="#blogs" data-link="blogs">Blogs</a>
-      <a href="#projects" data-link="projects">Projects</a>
-      <a href="#experience" data-link="experience">Experience</a>
-      <a href="#admin" data-link="admin">Admin</a>
-    </nav>
+
+
+  <div id="miniMenu">
+
+    <a href="#profile">Profile</a>
+
+    <a href="#experience">Experience</a>
+
+    <a href="#education">Education</a>
+
+    <a href="#skills">Skills</a>
+
+    <a href="#accomplishments">Accomplishments</a>
+
+    <a href="#blogs">Blogs</a>
+
+  </div>
+
+
+  <!-- banner: drop banner.jpg in same folder to show an actual image -->
+
+  <header id="banner">
+
+    <img id="bannerImg" src="banner.jpg" alt="banner" onerror="this.style.background='#e7e7e7'; this.removeAttribute('src');" />
+
   </header>
 
-  <main>
-    <div id="home" class="page active">
-      <div class="card grid">
-        <div class="col-4">
-          <img id="profilePic" src="https://via.placeholder.com/300x300?text=Profile" alt="profile" style="width:100%;border-radius:12px;"/>
+
+  <main class="wrap">
+
+
+    <!-- PROFILE -->
+
+    <section id="profile">
+
+      <div class="profile">
+
+        <div class="profile-pic" id="profilePic">
+
+          <!-- drop profile.jpg in same folder to show -->
+
+          <img id="profileImage" src="profile.jpg" alt="Dhruv Saxena" onerror="this.remove();">
+
         </div>
-        <div class="col-8">
-          <h2 id="headline">Hi — I'm Dhruv</h2>
-          <p class="small muted" id="summary">A compact interactive portfolio. Use the Admin (password-protected) to add blogs/projects/experience and images. Changes are committed to the GitHub repo as JSON files so the site is dynamic.</p>
-          <div style="margin-top:14px" id="skillsCard" class="card">
-            <h3 style="margin:0 0 10px 0">Skills</h3>
-            <canvas id="skillsChart" width="600" height="200"></canvas>
-            <div class="small muted" style="margin-top:8px">Education and skills are editable in Admin — graph updates automatically.</div>
+
+
+        <div class="profile-meta">
+
+          <div class="name-row">
+
+            <h1 id="displayName">Dhruv Saxena</h1>
+
+            <div class="age-badge" title="Age">15</div>
+
           </div>
-        </div>
-      </div>
 
-      <section style="margin-top:18px">
-        <div class="card">
-          <h3>Accomplishments</h3>
-          <div id="accomplishmentsList"></div>
-        </div>
-      </section>
-    </div>
 
-    <div id="blogs" class="page">
-      <div class="card">
-        <h2>Blogs</h2>
-        <div id="blogsList"></div>
-      </div>
-    </div>
+          <p class="meta-small" id="profileSummary">
 
-    <div id="projects" class="page">
-      <div class="card">
-        <h2>Projects</h2>
-        <div id="projectsList"></div>
-      </div>
-    </div>
+            A dedicated ResearchGate Fellow with experience in AI development, scientific writing and building AI tools (ImagoPedia). Collaborations include IIT-BHU, UPPEN & Cambridge.
 
-    <div id="experience" class="page">
-      <div class="card">
-        <h2>Experience</h2>
-        <div id="experienceList"></div>
-      </div>
-    </div>
+          </p>
 
-    <div id="admin" class="page">
-      <div class="card">
-        <h2>Admin Panel</h2>
-        <p class="admin-note">This panel commits content to your GitHub repo. You will need a Personal Access Token with `repo` (or at least `contents`) scope. This is a client-side tool — tokens are used only in your browser session and never sent to any third-party server by this code. (Client-side security is limited; for production use a server-side endpoint.)</p>
 
-        <div id="loginBox">
-          <label>Password (required):</label>
-          <input id="adminPassword" placeholder="Enter password" />
-          <label style="margin-top:8px">GitHub Personal Access Token (will be used to write to repo):</label>
-          <input id="githubToken" placeholder="ghp_xxx..." />
-          <label style="margin-top:8px">Repository (owner/repo):</label>
-          <input id="repoName" placeholder="dhruvsaxena314/dhruvsaxena314.github.io" value="dhruvsaxena314/dhruvsaxena314.github.io" />
-          <div style="margin-top:12px" class="flex"><button class="btn" id="authBtn">Unlock Admin</button><button class="btn danger" id="clearToken">Clear Token</button></div>
+          <p class="muted"><strong>Location:</strong> Varanasi, India &nbsp; • &nbsp; <strong>Email:</strong> <a href="mailto:dhruvisgood13@gmail.com">dhruvisgood13@gmail.com</a></p>
+
+          <p class="muted"><strong>LinkedIn:</strong> dhruv-saxena-3a2b4e7a &nbsp; • &nbsp; <strong>GitHub:</strong> github.com/dhruvisgood</p>
+
         </div>
 
-        <div id="adminControls" style="display:none;margin-top:18px">
-          <h3>Add a Blog</h3>
-          <label>Title</label>
-          <input id="blogTitle" />
-          <label>Content (Markdown)</label>
-          <textarea id="blogContent" rows="6"></textarea>
-          <label>Optional image</label>
-          <input type="file" id="blogImage" accept="image/*" />
-          <div style="margin-top:8px" class="flex"><button class="btn" id="saveBlog">Save Blog (commit)</button></div>
-
-          <hr style="margin:18px 0">
-          <h3>Add / Edit Project</h3>
-          <label>Project Title</label>
-          <input id="projectTitle" />
-          <label>Short summary</label>
-          <textarea id="projectSummary" rows="3"></textarea>
-          <label>Project Link (optional)</label>
-          <input id="projectLink" />
-          <label>Project Image</label>
-          <input type="file" id="projectImage" accept="image/*" />
-          <div style="margin-top:8px" class="flex"><button class="btn" id="saveProject">Save Project</button></div>
-
-          <hr style="margin:18px 0">
-          <h3>Edit Experience</h3>
-          <label>Company / Role</label>
-          <input id="expTitle" />
-          <label>Duration</label>
-          <input id="expDuration" />
-          <label>Details</label>
-          <textarea id="expDetails" rows="3"></textarea>
-          <div style="margin-top:8px" class="flex"><button class="btn" id="saveExperience">Save Experience</button></div>
-
-          <hr style="margin:18px 0">
-          <h3>Edit Education & Skills (graph updates)</h3>
-          <label>Education JSON (array of objects with {institution, degree, year})</label>
-          <textarea id="educationJson" rows="4" placeholder='[{"institution":"X","degree":"Y","year":"2023"}]'></textarea>
-          <label>Skills JSON (array of {name,level}) level 0-100</label>
-          <textarea id="skillsJson" rows="4" placeholder='[{"name":"JavaScript","level":82}]'></textarea>
-          <div style="margin-top:8px" class="flex"><button class="btn" id="saveEduSkills">Save Education & Skills</button></div>
-
-          <hr style="margin:18px 0">
-          <h3>Accomplishments (add/edit)</h3>
-          <label>Title</label>
-          <input id="accTitle" />
-          <label>Short summary</label>
-          <textarea id="accSummary" rows="3"></textarea>
-          <label>Image (optional)</label>
-          <input type="file" id="accImage" accept="image/*" />
-          <div style="margin-top:8px" class="flex"><button class="btn" id="saveAcc">Save Accomplishment</button></div>
-
-          <hr style="margin:18px 0">
-          <h3>Advanced</h3>
-          <div class="small muted">You can run site-wide maintenance: re-generate JSON files, or preview the raw repo files below.</div>
-          <div style="margin-top:8px" class="flex"><button class="btn" id="regenAll">Re-generate All JSON (local preview)</button></div>
-          <pre id="rawOutput" style="margin-top:12px;max-height:300px;overflow:auto;background:rgba(0,0,0,0.3);padding:12px;border-radius:8px"></pre>
-        </div>
       </div>
-    </div>
+
+    </section>
+
+
+    <!-- EXPERIENCE -->
+
+    <section id="experience">
+
+      <h2>Experience</h2>
+
+      <div class="list" id="experienceList"></div>
+
+      <!-- admin-only form -->
+
+      <div style="margin-top:12px;">
+
+        <div style="display:flex; gap:8px; align-items:center;">
+
+          <input id="passkey" type="password" placeholder="admin passkey (unlock to edit/remove)" />
+
+          <button id="unlock" class="primary">Unlock</button>
+
+        </div>
+
+        <div id="adminPanel" style="display:none; margin-top:10px;">
+
+          <div class="form-row">
+
+            <input id="expTitle" type="text" placeholder="Experience title (e.g. Junior Research Fellow — ResearchGate)" />
+
+            <textarea id="expText" rows="3" placeholder="Optional details (these will be hidden by default and shown when you expand)"></textarea>
+
+            <input id="expMedia" type="file" accept="image/*,video/*" />
+
+            <div style="display:flex; gap:8px;">
+
+              <button id="addExperienceBtn" class="primary">Add Experience</button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- EDUCATION -->
+
+    <section id="education">
+
+      <h2>Education</h2>
+
+      <p><strong>Sunbeam School Lahartara</strong> — Current</p>
+
+      <p class="muted">IMO & IEO Gold Medalist. Founding member, Young Society Science Club. Dissertation interest: Programming, AI/ML, Physics, Mathematics, Biology & more.</p>
+
+    </section>
+
+
+    <!-- SKILLS -->
+
+    <section id="skills">
+
+      <h2>Skills</h2>
+
+
+      <div style="margin-top:8px;">
+
+        <div class="muted">Project Management</div>
+
+        <div class="bar"><i style="width:85%"></i></div>
+
+
+        <div class="muted">Python / ML / DL</div>
+
+        <div class="bar"><i style="width:90%"></i></div>
+
+
+        <div class="muted">Computer Vision / NLP</div>
+
+        <div class="bar"><i style="width:88%"></i></div>
+
+
+        <div class="muted">Scientific Writing</div>
+
+        <div class="bar"><i style="width:95%"></i></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ACCOMPLISHMENTS -->
+
+    <section id="accomplishments">
+
+      <h2>Accomplishments</h2>
+
+      <ul style="margin:8px 0 0 20px; color:var(--muted)">
+
+        <li>ResearchGate Fellow</li>
+
+        <li>Next Voters Fellow</li>
+
+        <li>Perplexity Student Partner</li>
+
+        <li>InternShala Student Partner</li>
+
+        <li>INSPIRE MANAK Awardee</li>
+
+        <li>Google Certified in AI & ML</li>
+
+        <li>NVIDIA DLI Certified — LLM Development</li>
+
+        <li>IBM Certified in Quantum Computing</li>
+
+      </ul>
+
+    </section>
+
+
+    <!-- BLOGS -->
+
+    <section id="blogs">
+
+      <h2>Blogs</h2>
+
+      <div id="blogList" class="list"></div>
+
+
+      <div style="margin-top:12px;">
+
+        <div id="blogAdminPanel" style="display:none;">
+
+          <div class="form-row">
+
+            <input id="blogTitle" type="text" placeholder="Blog title" />
+
+            <textarea id="blogText" rows="4" placeholder="Blog summary/content"></textarea>
+
+            <input id="blogMedia" type="file" accept="image/*,video/*" />
+
+            <div style="display:flex; gap:8px;">
+
+              <button id="addBlogBtn" class="primary">Add Blog</button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CONTACT -->
+
+    <section id="contact">
+
+      <h2>Contact</h2>
+
+      <form action="https://formspree.io/f/xzzkvjjk" method="POST">
+
+        <div style="display:grid; gap:8px; max-width:560px;">
+
+          <input name="name" type="text" placeholder="Your name" required />
+
+          <input name="email" type="email" placeholder="Your email" required />
+
+          <textarea name="message" rows="5" placeholder="Message" required></textarea>
+
+          <button class="primary" type="submit">Send message</button>
+
+        </div>
+
+      </form>
+
+    </section>
+
 
   </main>
 
-  <footer>
-    <div class="small muted">Rewritten site — client-side GitHub writer. Read README in code for safety notes.</div>
-  </footer>
 
-  <script>
-    // ---------- Simple SPA routing ----------
-    document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click', e=>{
-      document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
-      e.target.classList.add('active');
-      const link = e.target.getAttribute('data-link');
-      showPage(link);
-      location.hash = link;
-    }));
-    function showPage(name){
-      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-      const el = document.getElementById(name);
-      if(el) el.classList.add('active');
-    }
-    // on load hash
-    const hash = location.hash.replace('#','')||'home';
-    document.querySelectorAll('nav a').forEach(x=>{ if(x.getAttribute('data-link')===hash) x.classList.add('active'); else x.classList.remove('active')});
-    showPage(hash);
+<script>
 
-    // ---------- App state and GitHub helpers ----------
-    const OWNER_REPO_PLACEHOLDER = 'dhruvsaxena314/dhruvsaxena314.github.io';
-    const ADMIN_PASSWORD = 'kinjal_is_<3'; // as requested (client-side only)
-    let ghToken = '';
-    let repoFull = OWNER_REPO_PLACEHOLDER;
+/* =============================
 
-    function setTokenFromInput(){ ghToken = document.getElementById('githubToken').value.trim(); repoFull = document.getElementById('repoName').value.trim() || OWNER_REPO_PLACEHOLDER; }
+   Data + Helper utils
 
-    async function ghGet(path){
-      // GET raw content for public repo
-      const url = `https://api.github.com/repos/${repoFull}/contents/${path}`;
-      const res = await fetch(url, {headers: {'Accept':'application/vnd.github.v3+json'}});
-      if(res.status===404) return null;
-      if(!res.ok) throw new Error('GitHub GET failed: '+res.status);
-      return await res.json();
-    }
+   ============================= */
 
-    async function ghPut(path, contentBase64, message, sha){
-      setTokenFromInput();
-      if(!ghToken) throw new Error('No GitHub token set');
-      const url = `https://api.github.com/repos/${repoFull}/contents/${path}`;
-      const body = {message,content:contentBase64};
-      if(sha) body.sha = sha;
-      const res = await fetch(url, {method:'PUT',headers:{'Accept':'application/vnd.github.v3+json','Authorization':`token ${ghToken}`,'Content-Type':'application/json'},body:JSON.stringify(body)});
-      const data = await res.json();
-      if(!res.ok) throw new Error(JSON.stringify(data));
-      return data;
-    }
+const ADMIN_PASS = 'itrustedyou';
 
-    async function uploadFile(file, targetPath){
-      // file: File object, targetPath: path within repo
-      const reader = new FileReader();
-      return new Promise((resolve,reject)=>{
-        reader.onload = async ()=>{
-          const b64 = reader.result.split(',')[1];
-          try{
-            const resp = await ghPut(targetPath, b64, `Add ${targetPath}`);
-            resolve(resp.content.download_url);
-          }catch(err){reject(err)}
-        };
-        reader.onerror = e=>reject(e);
-        reader.readAsDataURL(file);
-      });
-    }
+let isAdmin = false;
 
-    // ---------- Data model - files stored in repo under /data/*.json and /assets/images/* ----------
-    // blogs.json, projects.json, experience.json, education.json, skills.json, accomplishments.json
 
-    async function loadAll(){
-      const base = 'data';
-      const out = {};
-      const files = ['blogs.json','projects.json','experience.json','education.json','skills.json','accomplishments.json'];
-      for(const f of files){
-        try{
-          const res = await ghGet(base+'/'+f);
-          if(res && res.content){
-            const text = atob(res.content);
-            out[f.replace('.json','')] = JSON.parse(text);
-          } else {
-            out[f.replace('.json','')] = [];
-          }
-        }catch(e){ console.warn('loadAll:',e); out[f.replace('.json','')] = [] }
-      }
-      return out;
-    }
+/* preloaded CV content (IDs chosen so experiences < 100 and blogs >=100) */
 
-    async function saveJSON(path, obj, message){
-      const raw = JSON.stringify(obj,null,2);
-      const base64 = btoa(unescape(encodeURIComponent(raw)));
-      // check if exists to include sha
-      let sha;
-      try{
-        const existing = await ghGet(path);
-        if(existing && existing.sha) sha = existing.sha;
-      }catch(e){}
-      return await ghPut(path, base64, message || `Update ${path}`, sha);
-    }
+const PRELOADED_EXPERIENCES = [
 
-    // ---------- Renderers ----------
-    let globalData = null;
-    async function renderAll(){
-      try{
-        globalData = await loadAll();
-      }catch(e){console.error(e); globalData = {}};
-      // Blogs
-      const bl = document.getElementById('blogsList'); bl.innerHTML='';
-      (globalData.blogs||[]).slice().reverse().forEach(b=>{
-        const d = document.createElement('div'); d.className='list-item';
-        d.innerHTML = `<div style="display:flex;gap:12px"><img src="${b.image||'https://via.placeholder.com/120x84?text=img'}" class="thumb"/><div><strong>${b.title}</strong><div class="small muted">${b.date||''}</div><div style="margin-top:6px">${markedToHtml(b.content||'')}</div></div></div>`;
-        bl.appendChild(d);
-      });
+  { id: 1, title: 'Student Partner — Comet Browser', text: 'Promoted campus events, organized workshops and student engagement activities to popularize Comet Browser.' },
 
-      // Projects
-      const pl = document.getElementById('projectsList'); pl.innerHTML='';
-      (globalData.projects||[]).forEach(p=>{
-        const d = document.createElement('div'); d.className='list-item';
-        d.innerHTML = `<div style="display:flex;gap:12px"><img src="${p.image||'https://via.placeholder.com/120x84?text=project'}" class="thumb"/><div><strong>${p.title}</strong> <div class="small muted">${p.link?`<a href='${p.link}' target='_blank'>link</a>`:''}</div><div style="margin-top:6px">${p.summary}</div></div></div>`;
-        pl.appendChild(d);
-      });
+  { id: 2, title: 'InternShala Student Partner', text: 'Promoted internships through social media & campus events; campus ambassador at Sunbeam Lahartara.' },
 
-      // Experience
-      const exl = document.getElementById('experienceList'); exl.innerHTML='';
-      (globalData.experience||[]).forEach(e=>{
-        const d = document.createElement('div'); d.className='list-item';
-        d.innerHTML = `<strong>${e.title}</strong><div class="small muted">${e.duration}</div><div style="margin-top:6px">${e.details}</div>`;
-        exl.appendChild(d);
-      });
+  { id: 3, title: 'Junior Research Fellow — ResearchGate', text: 'Conducted literature reviews, mathematical modelling, and collaborated with IIT-BHU, UPPEN & Cambridge on neural network research.' },
 
-      // Accomplishments
-      const al = document.getElementById('accomplishmentsList'); al.innerHTML='';
-      (globalData.accomplishments||[]).forEach((a,idx)=>{
-        const d = document.createElement('div'); d.className='list-item accomplishment';
-        d.innerHTML = `<div style='display:flex;gap:12px;align-items:center'><img src='${a.image||'https://via.placeholder.com/120x84?text=acc'}' class='thumb'/><div><strong>${a.title}</strong><div class='small muted'>${a.year||''}</div></div></div>`;
-        d.addEventListener('click', ()=>showAccomplishmentDetail(a, idx));
-        al.appendChild(d);
-      });
+  { id: 4, title: 'Research Fellow — Next Voters', text: 'Fellowship on research for democracy through AI with mentorship from UPPEN and Stanford.' }
 
-      // Skills chart
-      try{ renderSkillsChart(globalData.skills || []); }catch(e){console.warn(e)}
+];
 
-      // Fill admin textareas with current JSON
-      document.getElementById('educationJson').value = JSON.stringify(globalData.education || [], null, 2);
-      document.getElementById('skillsJson').value = JSON.stringify(globalData.skills || [], null, 2);
-    }
 
-    function markedToHtml(md){
-      // very minimal markdown -> html (safe subset)
-      return md.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>');
-    }
+const PRELOADED_BLOGS = [
 
-    function showAccomplishmentDetail(a, idx){
-      const modal = document.createElement('div');
-      modal.style.position='fixed';modal.style.left=0;modal.style.top=0;modal.style.right=0;modal.style.bottom=0;modal.style.display='flex';modal.style.alignItems='center';modal.style.justifyContent='center';modal.style.background='rgba(0,0,0,0.6)';
-      const box = document.createElement('div');box.className='card';box.style.maxWidth='820px';box.style.width='90%';
-      box.innerHTML = `<div style='display:flex;gap:12px'><img src='${a.image||'https://via.placeholder.com/240x160?text=acc'}' style='width:240px;height:160px;object-fit:cover;border-radius:8px'/><div><h3>${a.title}</h3><div class='small muted'>${a.year||''}</div><div style='margin-top:10px'>${a.summary||''}</div><div style='margin-top:12px' class='flex'><button class='btn' id='editAccBtn'>Edit</button><button class='btn danger' id='closeAccBtn'>Close</button></div></div></div>`;
-      modal.appendChild(box);document.body.appendChild(modal);
-      document.getElementById('closeAccBtn').addEventListener('click', ()=>document.body.removeChild(modal));
-      document.getElementById('editAccBtn').addEventListener('click', ()=>{
-        document.body.removeChild(modal);
-        // populate admin fields
-        showPage('admin');document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));document.querySelector('[data-link=admin]').classList.add('active');
-        document.getElementById('accTitle').value = a.title||'';
-        document.getElementById('accSummary').value = a.summary||'';
-      });
-    }
+  { id: 100, title: 'ImagoPedia — AI tool overview', text: 'Short summary about ImagoPedia and its goals in research assistance.' }
 
-    // ---------- Simple skills chart (vanilla canvas) ----------
-    function renderSkillsChart(skills){
-      const c = document.getElementById('skillsChart'); const ctx = c.getContext('2d');
-      // clear
-      ctx.clearRect(0,0,c.width,c.height);
-      const padding = 40; const w = c.width - padding*2; const h = c.height - padding*2;
-      const max = 100;
-      const barW = w / Math.max(1, skills.length) * 0.7;
-      skills.forEach((s,i)=>{
-        const x = padding + i * (w / Math.max(1,skills.length)) + (w / Math.max(1,skills.length) - barW)/2;
-        const barH = (s.level/max)*h;
-        ctx.fillStyle = '#7c3aed99';
-        ctx.fillRect(x, padding + (h-barH), barW, barH);
-        ctx.fillStyle = '#fff'; ctx.font='12px Inter, Arial'; ctx.textAlign='center';
-        ctx.fillText(s.name, x + barW/2, padding + h + 16);
-      });
-    }
+];
 
-    // ---------- Admin actions ----------
-    document.getElementById('authBtn').addEventListener('click', ()=>{
-      const pass = document.getElementById('adminPassword').value;
-      setTokenFromInput();
-      if(pass !== ADMIN_PASSWORD){ alert('Wrong password'); return; }
-      if(!ghToken){ if(!confirm('No GitHub token provided — admin will be unlocked for local preview only (no commits). Continue?')) return; }
-      document.getElementById('adminControls').style.display='block';
-      document.getElementById('loginBox').style.display='none';
-      renderAll();
-    });
-    document.getElementById('clearToken').addEventListener('click', ()=>{ document.getElementById('githubToken').value=''; ghToken=''; alert('Token cleared from input (if you had any).') });
 
-    document.getElementById('saveBlog').addEventListener('click', async ()=>{
-      try{
-        const title = document.getElementById('blogTitle').value.trim(); const content = document.getElementById('blogContent').value.trim();
-        if(!title||!content) return alert('title+content needed');
-        const imgFile = document.getElementById('blogImage').files[0];
-        let imageUrl = '';
-        if(imgFile){
-          const fname = `assets/images/blog-${Date.now()}-${imgFile.name}`;
-          imageUrl = await uploadFile(imgFile, fname);
-        }
-        const all = globalData.blogs || [];
-        all.push({title,content,image:imageUrl,date:new Date().toISOString().slice(0,10)});
-        await saveJSON('data/blogs.json', all, `Add blog ${title}`);
-        alert('Blog saved'); renderAll();
-      }catch(e){alert('Failed to save blog: '+e)}
-    });
+function ensureInitialData(){
 
-    document.getElementById('saveProject').addEventListener('click', async ()=>{
-      try{
-        const title=document.getElementById('projectTitle').value.trim(); const summary=document.getElementById('projectSummary').value.trim(); const link=document.getElementById('projectLink').value.trim();
-        if(!title) return alert('title needed');
-        let imageUrl=''; const imgFile = document.getElementById('projectImage').files[0];
-        if(imgFile){ imageUrl = await uploadFile(imgFile, `assets/images/project-${Date.now()}-${imgFile.name}`); }
-        const all = globalData.projects||[]; all.push({title,summary,link,image:imageUrl});
-        await saveJSON('data/projects.json', all, `Add project ${title}`);
-        alert('Project saved'); renderAll();
-      }catch(e){alert('Failed to save project: '+e)}
-    });
+  if(!localStorage.getItem('experiences')) localStorage.setItem('experiences', JSON.stringify(PRELOADED_EXPERIENCES));
 
-    document.getElementById('saveExperience').addEventListener('click', async ()=>{
-      try{
-        const title=document.getElementById('expTitle').value.trim(); const duration=document.getElementById('expDuration').value.trim(); const details=document.getElementById('expDetails').value.trim();
-        if(!title) return alert('title needed');
-        const all = globalData.experience||[]; all.push({title,duration,details});
-        await saveJSON('data/experience.json', all, `Add experience ${title}`);
-        alert('Experience saved'); renderAll();
-      }catch(e){alert('Failed to save experience: '+e)}
-    });
+  if(!localStorage.getItem('blogs')) localStorage.setItem('blogs', JSON.stringify(PRELOADED_BLOGS));
 
-    document.getElementById('saveEduSkills').addEventListener('click', async ()=>{
-      try{
-        const ed = JSON.parse(document.getElementById('educationJson').value||'[]');
-        const sk = JSON.parse(document.getElementById('skillsJson').value||'[]');
-        await saveJSON('data/education.json', ed, 'Update education');
-        await saveJSON('data/skills.json', sk, 'Update skills');
-        alert('Education & Skills saved'); renderAll();
-      }catch(e){alert('Invalid JSON or failed to save: '+e)}
-    });
+}
 
-    document.getElementById('saveAcc').addEventListener('click', async ()=>{
-      try{
-        const title=document.getElementById('accTitle').value.trim(); const summary=document.getElementById('accSummary').value.trim();
-        if(!title) return alert('title needed');
-        let imageUrl=''; const imgFile=document.getElementById('accImage').files[0];
-        if(imgFile){ imageUrl = await uploadFile(imgFile, `assets/images/acc-${Date.now()}-${imgFile.name}`); }
-        const all = globalData.accomplishments||[]; all.push({title,summary,image:imageUrl,year:new Date().getFullYear()});
-        await saveJSON('data/accomplishments.json', all, `Add accomplishment ${title}`);
-        alert('Saved'); renderAll();
-      }catch(e){alert('Failed to save accomplishment: '+e)}
-    });
+ensureInitialData();
 
-    document.getElementById('regenAll').addEventListener('click', async ()=>{
-      try{ await renderAll(); document.getElementById('rawOutput').textContent = JSON.stringify(globalData,null,2); alert('Regenerated local preview') }catch(e){alert('Failed: '+e)}
-    });
 
-    // ---------- Initialization ----------
-    // try to load public data on first load for preview
-    (async ()=>{ try{ globalData = await loadAll(); await renderAll(); }catch(e){ console.warn('init load failed',e); globalData={} } })();
+/* safe HTML escaping */
 
-  </script>
+function esc(s){ return String(s || '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+
+/* =============================
+
+   Rendering logic
+
+   ============================= */
+
+const expListEl = document.getElementById('experienceList');
+
+const blogListEl = document.getElementById('blogList');
+
+
+function renderLists(){
+
+  render('experiences', expListEl, renderExperienceItem);
+
+  render('blogs', blogListEl, renderBlogItem);
+
+}
+
+
+function render(key, container, itemRenderer){
+
+  container.innerHTML = '';
+
+  const items = JSON.parse(localStorage.getItem(key) || '[]');
+
+  items.forEach(it => container.appendChild(itemRenderer(it)));
+
+}
+
+
+/* experience shows title only by default; click expands details */
+
+function renderExperienceItem(item){
+
+  const wrap = document.createElement('div');
+
+  wrap.className = 'item';
+
+  wrap.innerHTML = `
+
+    <div class="title-row">
+
+      <h4>${esc(item.title)}</h4>
+
+      <div class="controls"></div>
+
+    </div>
+
+    <div class="details">${esc(item.text || '')}${mediaHtml(item)}</div>
+
+  `;
+
+
+  const details = wrap.querySelector('.details');
+
+  // show/hide details when title clicked
+
+  wrap.querySelector('h4').style.cursor = 'pointer';
+
+  wrap.querySelector('h4').addEventListener('click', ()=> details.style.display = (details.style.display === 'block' ? 'none' : 'block'));
+
+
+  const controls = wrap.querySelector('.controls');
+
+  if(isAdmin){
+
+    const editBtn = makeButton('Edit', ()=> openEditModal('experiences', item.id));
+
+    const delBtn  = makeButton('Remove', ()=> removeItem('experiences', item.id));
+
+    controls.appendChild(editBtn); controls.appendChild(delBtn);
+
+  }
+
+  return wrap;
+
+}
+
+
+function renderBlogItem(item){
+
+  const wrap = document.createElement('div');
+
+  wrap.className = 'item';
+
+  wrap.innerHTML = `
+
+    <div class="title-row">
+
+      <h4>${esc(item.title)}</h4>
+
+      <div class="controls"></div>
+
+    </div>
+
+    <div class="details">${esc(item.text || '')}${mediaHtml(item)}</div>
+
+  `;
+
+  const details = wrap.querySelector('.details');
+
+  wrap.querySelector('h4').style.cursor = 'pointer';
+
+  wrap.querySelector('h4').addEventListener('click', ()=> details.style.display = (details.style.display === 'block' ? 'none' : 'block'));
+
+
+  const controls = wrap.querySelector('.controls');
+
+  if(isAdmin){
+
+    const editBtn = makeButton('Edit', ()=> openEditModal('blogs', item.id));
+
+    const delBtn  = makeButton('Remove', ()=> removeItem('blogs', item.id));
+
+    controls.appendChild(editBtn); controls.appendChild(delBtn);
+
+  }
+
+  return wrap;
+
+}
+
+
+/* small helper to generate media HTML (stored as blobUrl string in item.media) */
+
+function mediaHtml(item){
+
+  if(!item.media) return '';
+
+  // item.media is stored as { type:'image'|'video', url: 'blob:...' }
+
+  try{
+
+    const m = item.media;
+
+    if(m.type==='image') return `<div style="margin-top:10px;"><img src="${esc(m.url)}" style="max-width:100%; border-radius:10px;"></div>`;
+
+    if(m.type==='video') return `<div style="margin-top:10px;"><video controls style="max-width:100%; border-radius:10px;"><source src="${esc(m.url)}"></video></div>`;
+
+  }catch(e){}
+
+  return '';
+
+}
+
+
+/* button maker */
+
+function makeButton(label, onClick){
+
+  const btn = document.createElement('button');
+
+  btn.textContent = label;
+
+  btn.addEventListener('click', onClick);
+
+  btn.style.fontSize = '13px';
+
+  btn.style.padding = '6px 8px';
+
+  btn.style.borderRadius = '8px';
+
+  btn.style.cursor = 'pointer';
+
+  btn.style.background = '#111';
+
+  btn.style.color = '#fff';
+
+  btn.style.border = 'none';
+
+  return btn;
+
+}
+
+
+/* =============================
+
+   Admin: unlock, add, edit, remove
+
+   ============================= */
+
+document.getElementById('unlock').addEventListener('click', ()=>{
+
+  const pass = document.getElementById('passkey').value;
+
+  if(pass === ADMIN_PASS){
+
+    isAdmin = true;
+
+    document.getElementById('adminPanel').style.display = 'block';
+
+    document.getElementById('blogAdminPanel').style.display = 'block';
+
+    renderLists();
+
+    alert('Admin unlocked — you can add, edit & remove entries.');
+
+  } else {
+
+    alert('Incorrect passkey');
+
+  }
+
+});
+
+
+/* add experience/blog from admin forms */
+
+document.getElementById('addExperienceBtn').addEventListener('click', ()=> addFromForm('experiences','expTitle','expText','expMedia'));
+
+document.getElementById('addBlogBtn') && document.getElementById('addBlogBtn').addEventListener('click', ()=> addFromForm('blogs','blogTitle','blogText','blogMedia'));
+
+
+function addFromForm(key, tId, txtId, mediaId){
+
+  if(!isAdmin) return alert('Unlock admin first.');
+
+  const title = document.getElementById(tId).value.trim();
+
+  const text  = document.getElementById(txtId).value.trim();
+
+  const file  = document.getElementById(mediaId) ? document.getElementById(mediaId).files[0] : null;
+
+  if(!title) return alert('Title required');
+
+
+  processFileToMedia(file).then(mediaObj=>{
+
+    const list = JSON.parse(localStorage.getItem(key) || '[]');
+
+    // new id heuristic: experiences <100, blogs >=100
+
+    const id = key==='blogs' ? (Date.now() % 100000) + 100 : (Date.now() % 100000);
+
+    list.push({ id, title, text, media: mediaObj });
+
+    localStorage.setItem(key, JSON.stringify(list));
+
+    clearForm(tId, txtId, mediaId);
+
+    renderLists();
+
+  });
+
+}
+
+
+function processFileToMedia(file){
+
+  return new Promise(resolve=>{
+
+    if(!file) return resolve(null);
+
+    const url = URL.createObjectURL(file);
+
+    const type = file.type.startsWith('image') ? 'image' : (file.type.startsWith('video') ? 'video' : 'other');
+
+    resolve({ type, url });
+
+  });
+
+}
+
+
+function clearForm(tId, txtId, mediaId){
+
+  document.getElementById(tId).value = '';
+
+  document.getElementById(txtId).value = '';
+
+  if(document.getElementById(mediaId)) document.getElementById(mediaId).value = '';
+
+}
+
+
+/* remove item (admin-only) */
+
+function removeItem(key, id){
+
+  if(!isAdmin) return alert('Unlock admin first.');
+
+  if(!confirm('Remove this item?')) return;
+
+  const arr = JSON.parse(localStorage.getItem(key) || '[]').filter(it => it.id !== id);
+
+  localStorage.setItem(key, JSON.stringify(arr));
+
+  renderLists();
+
+}
+
+
+/* edit item (admin-only) — uses prompt for simplicity, can be upgraded to modal form) */
+
+function openEditModal(key, id){
+
+  if(!isAdmin) return alert('Unlock admin first.');
+
+  const arr = JSON.parse(localStorage.getItem(key) || '[]');
+
+  const it = arr.find(x=>x.id===id);
+
+  if(!it) return alert('Item not found');
+
+  const newTitle = prompt('Edit title', it.title);
+
+  if(newTitle === null) return; // cancel
+
+  const newText = prompt('Edit details (optional)', it.text || '');
+
+  if(newTitle.trim() === '') return alert('Title cannot be empty');
+
+  it.title = newTitle.trim();
+
+  it.text = newText === null ? it.text : newText.trim();
+
+  localStorage.setItem(key, JSON.stringify(arr));
+
+  renderLists();
+
+}
+
+
+/* =============================
+
+   Initialization
+
+   ============================= */
+
+renderLists();
+
+
+/* animate bars on load */
+
+window.addEventListener('load', ()=> {
+
+  document.querySelectorAll('.bar > i').forEach(i=>{
+
+    const w = i.style.width;
+
+    i.style.width = '0';
+
+    setTimeout(()=> i.style.width = w, 60);
+
+  });
+
+});
+
+
+/* image fixes: ensure profile image covers and centered
+
+   If profile.jpg is missing, keep placeholder background; user-supplied image will replace it */
+
+(function ensureProfileImage(){
+
+  const img = document.getElementById('profileImage');
+
+  // if image exists and loads, it's already fine (object-fit:cover is applied via CSS)
+
+  // if missing image removed, keep the .profile-pic background grey and show initials
+
+  if(!img || !img.getAttribute('src')){
+
+    const container = document.getElementById('profilePic');
+
+    // show initials fallback
+
+    const fallback = document.createElement('div');
+
+    fallback.style.fontSize = '28px';
+
+    fallback.style.color = '#111';
+
+    fallback.style.fontWeight = '700';
+
+    fallback.textContent = 'DS';
+
+    container.appendChild(fallback);
+
+  }
+
+})();
+
+
+/* optional: clicking profile uploads (dev convenience) - not required */
+
+</script>
+
 </body>
+
 </html>
+
+
+
