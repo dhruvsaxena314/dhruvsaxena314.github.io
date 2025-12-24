@@ -315,6 +315,8 @@
    Admin Note: To make changes permanent for everyone, 
    Export data from Admin Panel and paste it here.
    ======================================================= */
+
+/* !!! PASTE EXPORTED DATA BELOW THIS LINE !!! */
 const DEFAULT_DATA = {
   experience: [
     { id: 1, title: 'Student Partner — Comet Browser', text: 'Promoted campus events, organized workshops and student engagement activities to popularize Comet Browser.' },
@@ -340,16 +342,13 @@ const DEFAULT_DATA = {
     { id: 6, title: 'NVIDIA DLI Certified', text: 'LLM Development certification.' }
   ],
   projects: [
+    { id: 1, title: 'ImagoPedia', text: 'An AI-powered tool designed to assist in scientific research and image analysis. Built using Python and Deep Learning frameworks.' }
   ],
   blogs: [
-    { id: 100, title: 'TESLA IN INDIA', text: "So recently, Tesla launched its first store in Mumbai, India. This has caused an immense rumble in the automotive sector of India, the unexpected entry of Tesla may change the future of EVs in India. But, in this article, we'll NOT talk about the economic impact or its potential, but about its fundamentals. It all started in 1769, when a French Inventor Nicolas-Joseph Cugnot, built the first steam-powered vehicle, a slow, cumbersome 
-machine considered the earliest automobile. In 1886, Karl Benz patented the first gasoline-powered automobile, the Benz Patent- Motorwagen, widely regarded as the first practical car. It had a single-cylinder engine and three wheels.
+    { id: 100, title: 'TESLA IN INDIA', text: `So recently, Tesla launched its first store in Mumbai, India. This has caused an immense rumble in the automotive sector of India, the unexpected entry of Tesla may change the future of EVs in India. But, in this article, we'll NOT talk about the economic impact or its potential, but about its fundamentals. It all started in 1769, when a French Inventor Nicolas-Joseph Cugnot, built the first steam-powered vehicle, a slow, cumbersome machine considered the earliest automobile. In 1886, Karl Benz patented the first gasoline-powered automobile, the Benz Patent- Motorwagen, widely regarded as the first practical car. It had a single-cylinder engine and three wheels.
 Then in 1908, Henry Ford introduced the Model T, revolutionizing the industry with assembly-line production, making cars affordable for the masses. In 1940, General Motors introduced the "Hydra-Matic," the first mass-produced fully automatic transmission, in Oldsmobile models.The Hydra-Matic was a fully automatic transmission that shifted gears automatically, unlike manual transmissions requiring clutch operation or earlier semi-automatic systems needing some driver input.Later such systems spread to Cadillac, Pontiac, and other GM brands, becoming a hallmark of American cars. After World War II, automatic transmissions gained widespread popularity, fueled by the economic boom and a growing demand for convenience. Cut to 2003, when Tesla Motors was founded by  Martin Eberhard and Marc Tarpenning in California, USA, with the goal to prove electric cars could be better than gasoline-powered cars in terms of performance and design. Later,Elon Musk, co-founder of PayPal and SpaceX, invested $6.5 million in 2004 and became Chairman of the Board. The main breakthrough of Tesla came in 2008 when, The Tesla Roadster, became the first highway-legal serial production all-electric car to use lithium-ion batteries and travel more than 200 miles on a single charge. But, in the same year, Tesla faced a “Financial Crisis” due to which Elon Musk took over as CEO and product architect. In 2012, Tesla  launched Model S, the first luxury electric sedan, and they also introduced the world to “Supercharger Stations” to support long-distance travel. Recently, Tesla also launched Tesla “Cybertruck”, which was instantly converted to an Internet Sensation because of its potentially Destructive advertising. So, now we can talk about how does an Automated Tesla works. Before starting, I would recommend to watch Mark Rober’s amazing video after reading. Tesla’s main automation highlight is it's ADAS ( Advanced Driver-Assistance System) or Autopilot. The car is equipped with 8 external camera to gather data about Other vehicles, Lanes, Pedestrians, Traffic lights, Signs in the form of images. Tesla earlier used Ultrasonic Detectors or RADARs but due to some “Unknown Logistic Reasons”, these were removed even though they work better than cameras. Now, after this Tesla Vision uses AI and Neural Networks, All decision-making is based on neural networks trained on billions of miles of real-world driving and every bit of extracted information. It's very difficult to explain the working of Neural Networks but, one may say that its main aim is to replicate human brain and it's data driven nature.The programme is trained by Tesla’s Supercomputer Dojo On March 18, 2018, in Arizona, Elaine Marie Herzberg (49) was killed while walking her bicycle across a roadway outside of a crosswalk when she was struck by an Uber test vehicle operating in autonomous mode. This incident raises several questions about the accuracy of these self-driving car. This fatality occurred in the presence of an onboard safety driver, Rafaela Vasquez. We should also focus on this screenshot of the official site of Tesla. The site mentions
-“ Full Self - Driving (Supervised) ”. We must also remember that while automatic cars have advanced, they still work only upon the data and algorithm fed into them by humans, and humans commit error.  The main reason why Tesla is not very safe in India is because the Traffic Pattern in India is very unpredictable and different then any other country. This adversely affects the algorithm used in the Car and leads to incorrect decision. Also the harsh driving conditions add up to difficulties. One more major yet subtle problem is Stray Animals and Bumps and Potholes which are usually not considered Data Points in Tesla Vision Neural Networks.  But still Tesla’s market capitalization—the total value of all its shares—is currently around $1.07 trillion, placing it among the top 10 most valuable companies globally and the most valuable automotive company of all time. “Autonomous vehicles hold great promise for reducing accidents and giving mobility to millions, but we must move responsibly—this is life-and-death technology.” -Sundar Pichai, CEO, Alphabet"
-'}
-{id: 100, title: 'HEYY', text: "hmmm 🤍" }
-
-  
+“ Full Self - Driving (Supervised) ”. We must also remember that while automatic cars have advanced, they still work only upon the data and algorithm fed into them by humans, and humans commit error.  The main reason why Tesla is not very safe in India is because the Traffic Pattern in India is very unpredictable and different then any other country. This adversely affects the algorithm used in the Car and leads to incorrect decision. Also the harsh driving conditions add up to difficulties. One more major yet subtle problem is Stray Animals and Bumps and Potholes which are usually not considered Data Points in Tesla Vision Neural Networks.  But still Tesla’s market capitalization—the total value of all its shares—is currently around $1.07 trillion, placing it among the top 10 most valuable companies globally and the most valuable automotive company of all time. “Autonomous vehicles hold great promise for reducing accidents and giving mobility to millions, but we must move responsibly—this is life-and-death technology.” -Sundar Pichai, CEO, Alphabet` },
+    { id: 101, title: 'HEYY', text: "hmmm 🤍" }
   ]
 };
 
@@ -365,12 +364,25 @@ function init(){
   // Load data from localstorage or default
   const stored = localStorage.getItem('dhruv_portfolio_data');
   if(stored){
-    STATE.data = JSON.parse(stored);
+    try {
+      STATE.data = JSON.parse(stored);
+    } catch(e) {
+      console.error("Local storage corrupted", e);
+      STATE.data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    }
   } else {
     STATE.data = JSON.parse(JSON.stringify(DEFAULT_DATA)); // deep copy
     saveData();
   }
   
+  // Basic validation to prevent crashing
+  if(!STATE.data.experience) STATE.data.experience = [];
+  if(!STATE.data.projects) STATE.data.projects = [];
+  if(!STATE.data.education) STATE.data.education = [];
+  if(!STATE.data.skills) STATE.data.skills = [];
+  if(!STATE.data.accomplishments) STATE.data.accomplishments = [];
+  if(!STATE.data.blogs) STATE.data.blogs = [];
+
   renderAll();
   
   // Admin listener
@@ -526,8 +538,10 @@ function handleAdminUnlock(){
     btn.className = 'primary';
     btn.style.position = 'fixed'; btn.style.bottom = '70px'; btn.style.right = '20px'; btn.style.zIndex='100';
     btn.onclick = () => {
-        navigator.clipboard.writeText(JSON.stringify(STATE.data));
-        alert('Data copied to clipboard! Paste this into the DEFAULT_DATA variable in the code to make changes permanent for everyone.');
+        // Pretty print JSON so it is easy to read and paste
+        const exportString = "const DEFAULT_DATA = " + JSON.stringify(STATE.data, null, 2) + ";";
+        navigator.clipboard.writeText(exportString);
+        alert('Data copied to clipboard! \n\nGo to your code editor, find the line "const DEFAULT_DATA = ...", delete that block, and paste this new code.');
     };
     document.body.appendChild(btn);
     renderAll();
