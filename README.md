@@ -274,26 +274,63 @@
 const DEFAULT_DATA = {
   "version": 1.2,
   "experience": [
-    { "id": 1, "title": "Student Partner — Comet Browser", "text": "Promoted campus events and engagement." },
-    { "id": 2, "title": "InternShala Student Partner", "text": "Campus ambassador promoting internships." },
-    { "id": 3, "title": "Junior Research Fellow — ResearchGate", "text": "Neural network research collaborator." }
+    {
+      "id": 1,
+      "title": "Student Partner — Comet Browser",
+      "text": "Promoted campus events and engagement."
+    },
+    {
+      "id": 2,
+      "title": "InternShala Student Partner",
+      "text": "Campus ambassador promoting internships."
+    },
+    {
+      "id": 3,
+      "title": "Junior Research Fellow — ResearchGate",
+      "text": "Neural network research collaborator."
+    }
   ],
   "projects": [
-    { "id": 1, "title": "ImagoPedia", "text": "AI-powered tool for scientific image analysis." }
+    {
+      "id": 1,
+      "title": "ImagoPedia",
+      "text": "AI-powered tool for scientific image analysis."
+    }
   ],
   "education": [
-    { "id": 1, "title": "Sunbeam School Lahartara", "text": "IMO Gold Medalist & Science Club founder." }
+    {
+      "id": 1,
+      "title": "Sunbeam School Lahartara",
+      "text": "IMO Gold Medalist & Science Club founder."
+    }
   ],
   "skills": [
-    { "id": 1, "title": "Python / ML", "percent": 90 },
-    { "id": 2, "title": "Scientific Writing", "percent": 95 }
+    {
+      "id": 1,
+      "title": "Python / ML",
+      "percent": 90
+    },
+    {
+      "id": 2,
+      "title": "Scientific Writing",
+      "percent": 95
+    }
   ],
   "accomplishments": [
-    { "id": 1, "title": "ResearchGate Fellow", "text": "Fellowship for contribution to open science." }
+    {
+      "id": 1,
+      "title": "ResearchGate Fellow",
+      "text": "Fellowship for contribution to open science."
+    },
+    {
+      "id": 1766752589818,
+      "title": "Indian Oil Science Quiz",
+      "text": "Won the Indian Oil Science Quiz 3.0 and brought home a reamrkable prize money of 1,20,000",
+      "image": "award.jpeg"
+    }
   ],
   "blogs": []
 };
-
 const STATE = { isAdmin: false, data: {} };
 
 function init() {
