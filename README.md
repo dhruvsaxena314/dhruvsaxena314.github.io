@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head>
+<heaheadd>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dhruv Saxena — Portfolio</title>
@@ -17,6 +17,7 @@
     body{
       margin:0; font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
       background:var(--bg); color:var(--accent); -webkit-font-smoothing:antialiased;
+      min-height: 100vh;
     }
 
     /* top sticky mini menu */
@@ -116,6 +117,9 @@
     #adminToggle { position: fixed; bottom: 20px; right: 20px; z-index: 50; }
     #adminToggle button { background: #fff; border: 2px solid #000; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-weight: bold; }
     
+    /* Error fallback */
+    #crashScreen { display:none; flex-direction:column; align-items:center; justify-content:center; position:fixed; inset:0; background:#fff; z-index:999; padding:20px; text-align:center; }
+
     /* responsive tweaks */
     @media (max-width:720px){
       .age-badge{ font-size:36px; opacity:.14; }
@@ -126,6 +130,13 @@
   </style>
 </head>
 <body>
+
+  <!-- Hidden safety net in case of JavaScript failure -->
+  <div id="crashScreen">
+    <h2>Something went wrong</h2>
+    <p>The site data might be corrupted.</p>
+    <button onclick="localStorage.clear(); location.reload();" style="padding:10px 20px; background:#000; color:#fff; border:none; border-radius:8px; cursor:pointer;">Reset App Data</button>
+  </div>
 
   <div id="miniMenu">
     <a onclick="router('home', 'profile')">Profile</a>
@@ -311,13 +322,9 @@
 
 <script>
 /* =======================================================
-   DEFAULT DATA (Fallback if localStorage is empty)
-   Admin Note: To make changes permanent for everyone, 
-   Export data from Admin Panel and paste it here.
+   REPLACEMENT POINT: PASTE YOUR EXPORTED CODE BELOW
    ======================================================= */
 
-/* !!! PASTE EXPORTED DATA BELOW THIS LINE !!! */
-const DEFAULT_DATA = {
 const DEFAULT_DATA = {
   "experience": [
     {
@@ -358,6 +365,11 @@ const DEFAULT_DATA = {
       "id": 2,
       "title": "Python / ML / DL",
       "percent": 90
+    },
+    {
+      "id": 3,
+      "title": "Computer Vision / NLP",
+      "percent": 88
     },
     {
       "id": 4,
@@ -402,76 +414,72 @@ const DEFAULT_DATA = {
       "id": 1,
       "title": "ImagoPedia",
       "text": "An AI-powered tool designed to assist in scientific research and image analysis. Built using Python and Deep Learning frameworks."
-    },
-    {
-      "id": 1766581564528,
-      "title": "this site",
-      "text": "",
-      "image": null
     }
   ],
   "blogs": [
     {
       "id": 100,
-      "title": "Welcome to my Portfolio",
-      "text": "This is the start of my journey sharing insights on AI, ML and Physics."
+      "title": "TESLA IN INDIA",
+      "text": "So recently, Tesla launched its first store in Mumbai, India. This has caused an immense rumble in the automotive sector of India, the unexpected entry of Tesla may change the future of EVs in India. It all started in 1769, when a French Inventor Nicolas-Joseph Cugnot, built the first steam-powered vehicle. In 1886, Karl Benz patented the first gasoline-powered automobile. Then in 1908, Henry Ford introduced the Model T, revolutionizing the industry. Cut to 2003, when Tesla Motors was founded... goal to prove electric cars could be better than gasoline-powered cars. Tesla's main automation highlight is its ADAS or Autopilot. Note: Humans still commit errors, and traffic in India is unpredictable."
+    },
+    {
+      "id": 101,
+      "title": "HEYY",
+      "text": "hmmm 🤍"
     }
   ]
 };
 
-/* =============================
-   STATE & INIT
-   ============================= */
+/* =======================================================
+   APP CORE LOGIC (Don't touch unless you know JS)
+   ======================================================= */
 const STATE = {
   isAdmin: false,
   data: {}
 };
 
 function init(){
-  // Load data from localstorage or default
-  const stored = localStorage.getItem('dhruv_portfolio_data');
-  if(stored){
-    try {
+  try {
+    const stored = localStorage.getItem('dhruv_portfolio_data');
+    if(stored){
       STATE.data = JSON.parse(stored);
-    } catch(e) {
-      console.error("Local storage corrupted", e);
+      // Validate structure - if it's missing basic keys, it's corrupt
+      if(!STATE.data.experience || !Array.isArray(STATE.data.experience)) throw new Error("Invalid structure");
+    } else {
       STATE.data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+      saveData();
     }
-  } else {
-    STATE.data = JSON.parse(JSON.stringify(DEFAULT_DATA)); // deep copy
-    saveData();
-  }
-  
-  // Basic validation to prevent crashing
-  if(!STATE.data.experience) STATE.data.experience = [];
-  if(!STATE.data.projects) STATE.data.projects = [];
-  if(!STATE.data.education) STATE.data.education = [];
-  if(!STATE.data.skills) STATE.data.skills = [];
-  if(!STATE.data.accomplishments) STATE.data.accomplishments = [];
-  if(!STATE.data.blogs) STATE.data.blogs = [];
-
-  renderAll();
-  
-  // Admin listener
-  document.getElementById('lockBtn').addEventListener('click', handleAdminUnlock);
-  
-  // Image fallback fix
-  if(!document.getElementById('profileImage').getAttribute('src')){
-      const c = document.getElementById('profilePic');
-      c.innerHTML = '<div style="font-size:30px; font-weight:bold;">DS</div>';
+    
+    renderAll();
+    
+    // Admin listener
+    document.getElementById('lockBtn').addEventListener('click', handleAdminUnlock);
+    
+    // Image fallback fix
+    const profileImg = document.getElementById('profileImage');
+    if(profileImg && (!profileImg.getAttribute('src') || profileImg.src.includes('profile.jpg'))){
+      profileImg.onerror = () => {
+         const c = document.getElementById('profilePic');
+         if(c) c.innerHTML = '<div style="font-size:30px; font-weight:bold;">DS</div>';
+      };
+    }
+  } catch(e) {
+    console.error("Critical Failure in Init:", e);
+    document.getElementById('crashScreen').style.display = 'flex';
   }
 }
 
 function saveData(){
-  localStorage.setItem('dhruv_portfolio_data', JSON.stringify(STATE.data));
-  renderAll();
+  try {
+    localStorage.setItem('dhruv_portfolio_data', JSON.stringify(STATE.data));
+    renderAll();
+  } catch(e) {
+    alert("Storage Error: Your changes might be too large (images?). Try using smaller images.");
+  }
 }
 
-/* =============================
-   ROUTING & VIEW LOGIC
-   ============================= */
+/* ROUNTING */
 function router(viewName, anchorId){
-  // Switch Views
   document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
   if(viewName === 'blog'){
     document.getElementById('blogView').classList.add('active');
@@ -492,21 +500,19 @@ function toggleForm(id){
   f.style.display = (f.style.display === 'block') ? 'none' : 'block';
 }
 
-/* =============================
-   RENDERING
-   ============================= */
+/* RENDERING */
 function renderAll(){
   renderList('experience', 'experienceList');
-  renderList('projects', 'projectsList', true); // true = project style
+  renderList('projects', 'projectsList', true);
   renderList('education', 'educationList');
   renderList('blogs', 'blogList');
   renderSkills();
   renderAccomplishments();
 }
 
-// Generic List Renderer (Experience, Edu, Projects, Blogs)
 function renderList(key, containerId, isProject = false){
   const container = document.getElementById(containerId);
+  if(!container) return;
   container.innerHTML = '';
   const items = STATE.data[key] || [];
 
@@ -515,7 +521,6 @@ function renderList(key, containerId, isProject = false){
     div.className = 'item';
     if(isProject) div.classList.add('project-item');
 
-    // Controls
     let controlsHtml = '';
     if(STATE.isAdmin){
       controlsHtml = `
@@ -525,7 +530,6 @@ function renderList(key, containerId, isProject = false){
         </div>`;
     }
 
-    // Media
     let mediaHtml = '';
     if(item.image) mediaHtml = `<div style="margin-top:10px;"><img src="${item.image}" style="max-width:100%; border-radius:8px; max-height:300px; object-fit:contain;"></div>`;
 
@@ -535,7 +539,7 @@ function renderList(key, containerId, isProject = false){
         ${controlsHtml}
       </div>
       <div class="details">
-        <p style="white-space:pre-wrap; margin:0;">${esc(item.text)}</p>
+        <p style="white-space:pre-wrap; margin:0; line-height:1.5;">${esc(item.text)}</p>
         ${mediaHtml}
       </div>
     `;
@@ -544,14 +548,13 @@ function renderList(key, containerId, isProject = false){
 }
 
 function toggleDetails(headerEl){
-  // Don't toggle if clicking buttons
   if(event.target.tagName === 'BUTTON') return;
   headerEl.parentElement.classList.toggle('expanded');
 }
 
-// Skills Renderer
 function renderSkills(){
   const container = document.getElementById('skillsList');
+  if(!container) return;
   container.innerHTML = '';
   (STATE.data.skills || []).forEach(skill => {
     const div = document.createElement('div');
@@ -565,15 +568,14 @@ function renderSkills(){
     `;
     container.appendChild(div);
   });
-  // Animate bars
   setTimeout(() => {
     document.querySelectorAll('.bar i').forEach(b => b.style.width = b.getAttribute('data-width'));
   }, 100);
 }
 
-// Accomplishments Renderer
 function renderAccomplishments(){
   const container = document.getElementById('accList');
+  if(!container) return;
   container.innerHTML = '';
   (STATE.data.accomplishments || []).forEach(acc => {
     const li = document.createElement('li');
@@ -584,64 +586,49 @@ function renderAccomplishments(){
   });
 }
 
-/* =============================
-   ADMIN LOGIC
-   ============================= */
+/* ADMIN TOOLS */
 const PASSKEY = 'itrustedyou';
 
 function handleAdminUnlock(){
-  if(STATE.isAdmin){
-    alert('Already Admin'); return;
-  }
+  if(STATE.isAdmin) return;
   const pass = prompt("Enter Admin Passkey:");
   if(pass === PASSKEY){
     STATE.isAdmin = true;
-    document.body.classList.add('admin-mode');
     document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'block');
     document.getElementById('lockBtn').textContent = '🔓';
+    
     // Add export button
     const btn = document.createElement('button');
+    btn.id = "exportBtn";
     btn.textContent = 'EXPORT DATA';
     btn.className = 'primary';
     btn.style.position = 'fixed'; btn.style.bottom = '70px'; btn.style.right = '20px'; btn.style.zIndex='100';
     btn.onclick = () => {
-        // Pretty print JSON so it is easy to read and paste
-        const exportString = "const DEFAULT_DATA = " + JSON.stringify(STATE.data, null, 2) + ";";
-        navigator.clipboard.writeText(exportString);
-        alert('Data copied to clipboard! \n\nGo to your code editor, find the line "const DEFAULT_DATA = ...", delete that block, and paste this new code.');
+        const cleanData = JSON.stringify(STATE.data, null, 2);
+        const exportCode = "const DEFAULT_DATA = " + cleanData + ";";
+        navigator.clipboard.writeText(exportCode);
+        alert('Code copied! Find the line "const DEFAULT_DATA = ..." in your index.html and replace it with what you just copied.');
     };
     document.body.appendChild(btn);
     renderAll();
   } else {
-    alert("Incorrect.");
+    alert("Access Denied.");
   }
 }
 
-// Generic Add
 async function addData(key, titleId, textId, imgId){
   const title = document.getElementById(titleId).value;
   const text = document.getElementById(textId).value;
-  let imgStr = null;
+  if(!title) return alert("Title required");
   
+  let imgStr = null;
   if(imgId){
      const file = document.getElementById(imgId).files[0];
      if(file) imgStr = await toBase64(file);
   }
 
-  if(!title) return alert("Title required");
-
-  const newItem = {
-    id: Date.now(),
-    title: title,
-    text: text,
-    image: imgStr
-  };
-
-  if(!STATE.data[key]) STATE.data[key] = [];
-  STATE.data[key].push(newItem);
+  STATE.data[key].push({ id: Date.now(), title, text, image: imgStr });
   saveData();
-
-  // Clear form
   document.getElementById(titleId).value = '';
   document.getElementById(textId).value = '';
   if(imgId) document.getElementById(imgId).value = '';
@@ -652,7 +639,6 @@ function addSkill(){
   const title = document.getElementById('in_skill_name').value;
   const perc = document.getElementById('in_skill_val').value;
   if(!title || !perc) return;
-  if(!STATE.data.skills) STATE.data.skills = [];
   STATE.data.skills.push({ id: Date.now(), title, percent: parseInt(perc) });
   saveData();
   document.getElementById('in_skill_name').value = '';
@@ -660,55 +646,42 @@ function addSkill(){
 }
 
 function deleteItem(key, id){
-  if(!confirm("Delete this item?")) return;
+  if(!confirm("Delete?")) return;
   STATE.data[key] = STATE.data[key].filter(x => x.id !== id);
   saveData();
 }
 
 function editItem(key, id){
   const item = STATE.data[key].find(x => x.id === id);
-  if(!item) return;
   const newT = prompt("Edit Title:", item.title);
   if(newT === null) return;
   const newTx = prompt("Edit Details:", item.text);
-  
   item.title = newT;
   if(newTx !== null) item.text = newTx;
   saveData();
 }
 
-/* =============================
-   HELPERS
-   ============================= */
-function esc(s){
-  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+function esc(s){ return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function toBase64(file) {
-  return new Promise((resolve, reject) => {
+  return new Promise((res, rej) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
+    reader.onload = () => res(reader.result);
+    reader.onerror = e => rej(e);
   });
 }
 
-// Modal
 function openModal(title, text){
   document.getElementById('mTitle').textContent = title;
-  document.getElementById('mBody').textContent = text || "No details available.";
+  document.getElementById('mBody').textContent = text || "";
   document.getElementById('infoModal').style.display = 'flex';
 }
-function closeModal(){
-  document.getElementById('infoModal').style.display = 'none';
-}
-document.getElementById('infoModal').addEventListener('click', (e)=>{
-  if(e.target.id === 'infoModal') closeModal();
-})
+function closeModal(){ document.getElementById('infoModal').style.display = 'none'; }
+document.getElementById('infoModal').onclick = (e) => { if(e.target.id === 'infoModal') closeModal(); }
 
-// Run
+// FIRE!
 init();
-
 </script>
 </body>
 </html>
