@@ -325,17 +325,41 @@
 const DEFAULT_DATA = {
   "version": 1.3,
   "experience": [
-    { "id": 1, "title": "Student Partner — Comet Browser", "text": "Promoted campus events and engagement.\n[img:0]\nWorking on digital reach.", "images": ["pic1.jpg"] }
+    {
+      "id": 1,
+      "title": "Student Partner — Comet Browser",
+      "text": "Promoted campus events and engagement.\n[img:0]\nWorking on digital reach.",
+      "images": [
+        "pic1.jpg"
+      ]
+    }
   ],
   "projects": [
-    { "id": 1, "title": "ImagoPedia", "text": "AI-powered tool for scientific image analysis.\n[img:0]\nDeveloped using Python.", "images": ["proj1.png"] }
+    {
+      "id": 1,
+      "title": "ImagoPedia",
+      "text": "AI-powered tool for scientific image analysis.\n[img:0]\nDeveloped using Python.",
+      "images": [
+        "proj1.png"
+      ]
+    }
   ],
   "blogs": [
-    { "id": 100, "title": "The Future of AI", "text": "AI is changing the world.\n[img:0]\nHere is a graph of growth.\n[img:1]\nConclusion reached.", "images": ["ai1.jpg", "ai2.png"] }
+    {
+      "id": 1768142901245,
+      "title": "Tesla In India",
+      "text": "\n                                                                                 [img:1]\n\n\nSo recently, Tesla launched its first store in Mumbai, India. This has caused an immense rumble in the automotive sector of India, the unexpected entry of Tesla may change the future of EVs in India. But, in this article, we'll NOT talk about the economic impact or its potential, but about its fundamentals.\n\nIt all started in 1769, when a French Inventor Nicolas-Joseph Cugnot, built the first steam-powered vehicle, a slow, cumbersome \nmachine considered the earliest automobile.        \nIn 1886, Karl Benz patented the first gasoline-powered automobile, the Benz Patent- Motorwagen, widely regarded as the first practical car. It had a single-cylinder engine and three wheels.\n\nThen in 1908, Henry Ford introduced the Model T, revolutionizing the industry with assembly-line production, making cars affordable for the masses.\n\nIn 1940, General Motors introduced the \"Hydra-Matic,\" the first mass-produced fully automatic transmission, in Oldsmobile models.The Hydra-Matic was a fully automatic transmission that shifted gears automatically, unlike manual transmissions requiring clutch operation or earlier semi-automatic systems needing some driver input.Later such systems spread to Cadillac, Pontiac, and other GM brands, becoming a hallmark of American cars. After World War II, automatic transmissions gained widespread popularity, fueled by the economic boom and a growing demand for convenience.\n\nCut to 2003, when Tesla Motors was founded by  Martin Eberhard and Marc Tarpenning in California, USA, with the goal to prove electric cars could be better than gasoline-powered cars in terms of performance and design. Later,             Elon Musk, co-founder of PayPal and SpaceX, invested $6.5 million in 2004 and became Chairman of the Board.\n\n\n\nThe main breakthrough of Tesla came in 2008 when, The Tesla Roadster, became the first highway-legal serial production all-electric car to use lithium-ion batteries and travel more than 200 miles on a single charge. But, in the same year, Tesla faced a “Financial Crisis” due to which Elon Musk took over as CEO and product architect. In 2012, Tesla  launched Model S, the first luxury electric sedan, and they also introduced the world to “Supercharger Stations” to support long-distance travel. Recently, Tesla also launched Tesla “Cybertruck”, which was instantly converted to an Internet Sensation because of its potentially Destructive advertising.\n\n\n\n\n\n\n[img:0]\n\n\n\n\n\n\nSo, now we can talk about how does an Automated Tesla works. Before starting, I would recommend to watch Mark Rober’s amazing video after reading. Tesla’s main automation highlight is it's ADAS ( Advanced Driver-Assistance System) or Autopilot.\n\nThe car is equipped with 8 external camera to gather data about Other vehicles, Lanes, Pedestrians, Traffic lights, Signs in the form of images. Tesla earlier used Ultrasonic Detectors or RADARs but due to some “Unknown Logistic Reasons”, these were removed even though they work better than cameras.\n\nNow, after this Tesla Vision uses AI and Neural Networks, All decision-making is based on neural networks trained on billions of miles of real-world driving and every bit of extracted information. It's very difficult to explain the working of Neural Networks but, one may say that its main aim is to replicate human brain and it's data driven nature.The programme is trained by Tesla’s Supercomputer Dojo\n\nOn March 18, 2018, in Arizona, Elaine Marie Herzberg (49) was killed while walking her bicycle across a roadway outside of a crosswalk when she was struck by an Uber test vehicle operating in autonomous mode. This incident raises several questions about the accuracy of these self-driving car. This fatality occurred in the presence of an onboard safety driver, Rafaela Vasquez.\n\nWe should also focus on this screenshot of the official site of Tesla. The site mentions\n“ Full Self - Driving (Supervised) ”. We must also remember that while automatic cars have advanced, they still work only upon the data and algorithm fed into them by humans, and humans commit error. \n\nThe main reason why Tesla is not very safe in India is because the Traffic Pattern in India is very unpredictable and different then any other country. This adversely affects the algorithm used in the Car and leads to incorrect decision. Also the harsh driving conditions add up to difficulties.\n\nOne more major yet subtle problem is Stray Animals and Bumps and Potholes which are usually not considered Data Points in Tesla Vision Neural Networks. \n\nBut still Tesla’s market capitalization—the total value of all its shares—is currently around $1.07 trillion, placing it among the top 10 most valuable companies globally and the most valuable automotive company of all time.\n\n\n\n\n\n\n\n\n\n“Autonomous vehicles hold great promise for reducing accidents and giving mobility to millions, but we must move responsibly—this is life-and-death technology.”\n\n\n-Sundar Pichai, CEO, Alphabet \n",
+      "images": [
+        "elon.jpg",
+        "Headerrr.jpg"
+      ]
+    }
   ],
-  "education": [], "skills": [], "accomplishments": []
+  "education": [],
+  "skills": [],
+  "accomplishments": []
 };
-
+  
 let STATE = { isAdmin: false, data: {}, tempImages: [] };
 
 function init() {
